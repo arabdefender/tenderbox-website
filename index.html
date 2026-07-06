@@ -300,22 +300,72 @@
       white-space: nowrap;
     }
 
-    /* ── SPEED COMPARISON ───────────────────────────────────────────── */
-    .speed-bars {
-      max-width: 760px; border-top: 1px solid var(--line);
-      padding-top: 34px; display: grid; gap: 32px;
+    /* ── SPEED COMPARISON (animated race) ───────────────────────────── */
+    .speed-lanes {
+      max-width: 860px; border-top: 1px solid var(--line);
+      padding-top: 34px;
+    }
+    .speed-lane { margin-bottom: 38px; }
+    .speed-lane:last-child { margin-bottom: 0; }
+    .speed-lane-head {
+      display: flex; justify-content: space-between; align-items: baseline;
+      margin-bottom: 10px; gap: 16px;
     }
     .speed-bar-label {
       display: block; font-size: 11px; font-weight: 600;
       letter-spacing: .14em; text-transform: uppercase;
-      color: var(--ink-faint); margin-bottom: 10px;
+      color: var(--ink-faint);
     }
-    .speed-bar { height: 12px; }
-    .speed-bar-long { width: 100%; background: var(--paper-deep); border: 1px solid var(--line); }
-    .speed-bar-short { width: 14px; background: var(--oxide); }
-    .speed-bar-cap {
+    .speed-clock {
+      font-size: 12px; font-weight: 600; letter-spacing: .1em;
+      color: var(--ink-faint); font-variant-numeric: tabular-nums;
+      text-transform: uppercase;
+    }
+    .speed-track {
+      position: relative; height: 38px;
+      background: var(--paper-deep); border: 1px solid var(--line-soft);
+      overflow: hidden;
+    }
+    .speed-seg {
+      position: absolute; top: 0; bottom: 0; width: 0;
+      display: flex; align-items: center; overflow: hidden;
+      transition: width 1.5s cubic-bezier(.25,.1,.25,1);
+    }
+    .speed-seg span {
+      font-size: 10.5px; font-weight: 600; letter-spacing: .07em;
+      text-transform: uppercase; color: var(--paper); white-space: nowrap;
+      padding: 0 12px; opacity: 0; transition: opacity .45s ease;
+    }
+    .speed-seg span.show { opacity: 1; }
+    .speed-box {
+      position: absolute; top: 0; bottom: 0; inset-inline-start: 0; width: 0;
+      background: var(--oxide);
+      transition: width .5s cubic-bezier(.34,1.56,.64,1);
+    }
+    .speed-returned {
+      position: absolute; top: 0; bottom: 0; inset-inline-start: 36px; inset-inline-end: 14px;
+      display: flex; align-items: center; gap: 14px;
+      opacity: 0; transition: opacity .8s ease;
+    }
+    .speed-returned.show { opacity: 1; }
+    .speed-returned::before {
+      content: ''; flex: 0 0 42px; height: 0;
+      border-top: 1px dashed var(--oxide);
+    }
+    .speed-returned span {
+      font-size: 12.5px; font-style: italic; color: var(--ink-mute);
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .speed-cap {
       display: block; margin-top: 10px; font-size: 13px;
       color: var(--ink-mute); font-variant-numeric: tabular-nums;
+      opacity: 0; transition: opacity .5s ease;
+    }
+    .speed-cap.show { opacity: 1; }
+    .speed-cap strong { color: var(--oxide-deep); font-weight: 600; }
+    @media (max-width: 640px) {
+      .speed-seg span { padding: 0 7px; letter-spacing: .02em; font-size: 9px; }
+      .speed-returned span { font-size: 11px; }
     }
 
     /* ── GOVERNANCE ─────────────────────────────────────────────────── */
@@ -580,7 +630,7 @@
     [dir="rtl"] .hero-facts span:last-child { border-left: none; margin-left: 0; padding-left: 0; }
     [dir="rtl"] .ledger-time { text-align: left; }
     /* Comparison bars start from the right in RTL */
-    [dir="rtl"] .speed-bar-short { margin-left: auto; }
+    [dir="rtl"] .speed-seg span { letter-spacing: 0; }
     [dir="rtl"] .gov-item { padding: 40px 0 40px 36px; }
     [dir="rtl"] .gov-item:nth-child(odd) { border-right: none; border-left: 1px solid rgba(250,248,244,.12); padding-left: 44px; padding-right: 0; }
     [dir="rtl"] .gov-item:nth-child(even) { padding-left: 36px; padding-right: 44px; }
@@ -830,16 +880,28 @@
       <h2 class="section-title" style="margin-top:22px;" data-i18n="speed.title">Fourteen weeks after opening.<br>Or on opening day.</h2>
       <p class="section-sub" data-i18n="speed.sub">Analysis runs in the background the moment bids unseal. Full tender analysis and negotiation schedules are ready before the committee leaves the room, and resubmission comparisons re-run in minutes, not weeks.</p>
     </div>
-    <div class="speed-bars reveal rd-1">
-      <div>
-        <span class="speed-bar-label" data-i18n="speed.manual">The manual route</span>
-        <div class="speed-bar speed-bar-long"></div>
-        <span class="speed-bar-cap num" data-i18n="speed.manualCap">14 weeks: consultant analysis, negotiation, resubmission</span>
+    <div class="speed-lanes reveal rd-1" id="speed-anim">
+      <div class="speed-lane">
+        <div class="speed-lane-head">
+          <span class="speed-bar-label" data-i18n="speed.manual">The manual route</span>
+          <span class="speed-clock"><span data-i18n="speed.week">Week</span>&nbsp;<span id="speed-wk" class="num">0</span>&nbsp;/&nbsp;14</span>
+        </div>
+        <div class="speed-track">
+          <div class="speed-seg" id="sseg1" style="background:#2A2F35;"><span data-i18n="speed.seg1">Consultant analysis · 8 weeks</span></div>
+          <div class="speed-seg" id="sseg2" style="background:#5C6167;"><span data-i18n="speed.seg2">Negotiation · 2</span></div>
+          <div class="speed-seg" id="sseg3" style="background:#8A8F94;"><span data-i18n="speed.seg3">Resubmission · 4</span></div>
+        </div>
+        <span class="speed-cap num" id="scap1" data-i18n="speed.manualCap">14 weeks from opening to a signed recommendation</span>
       </div>
-      <div>
-        <span class="speed-bar-label">Tenderbox</span>
-        <div class="speed-bar speed-bar-short"></div>
-        <span class="speed-bar-cap num" data-i18n="speed.dayCap">1 day</span>
+      <div class="speed-lane">
+        <div class="speed-lane-head">
+          <span class="speed-bar-label">Tenderbox</span>
+        </div>
+        <div class="speed-track">
+          <div class="speed-box" id="sbox"></div>
+          <div class="speed-returned" id="sret"><span data-i18n="speed.returned">13 weeks and 6 days returned to the programme</span></div>
+        </div>
+        <span class="speed-cap num" id="scap2"><strong data-i18n="speed.done">Done on opening day.</strong> <span data-i18n="speed.dayCap">Analysis and negotiation schedules ready at the opening.</span></span>
       </div>
     </div>
   </div>
@@ -1265,8 +1327,14 @@
       "speed.title": "أربعة عشر أسبوعاً بعد فتح المظاريف.<br>أو في يوم الفتح نفسه.",
       "speed.sub": "يبدأ التحليل في الخلفية لحظة فتح العطاءات. يكون تحليل المناقصة الكامل وجداول التفاوض جاهزة قبل مغادرة اللجنة القاعة، وتُعاد مقارنات إعادة التقديم في دقائق لا أسابيع.",
       "speed.manual": "المسار اليدوي",
-      "speed.manualCap": "14 أسبوعاً: تحليل استشاري، تفاوض، إعادة تقديم",
-      "speed.dayCap": "يوم واحد",
+      "speed.manualCap": "14 أسبوعاً من فتح المظاريف حتى توقيع التوصية",
+      "speed.dayCap": "تحليل المناقصة وجداول التفاوض جاهزة عند فتح المظاريف.",
+      "speed.week": "الأسبوع",
+      "speed.seg1": "التحليل الاستشاري · 8 أسابيع",
+      "speed.seg2": "التفاوض · 2",
+      "speed.seg3": "إعادة التقديم · 4",
+      "speed.done": "أُنجز في يوم فتح المظاريف.",
+      "speed.returned": "13 أسبوعاً و6 أيام تُعاد إلى البرنامج الزمني",
       "gov.kicker": "الحوكمة",
       "gov.title": "عملية مناقصة يمكنكم<br>الدفاع عنها، سطراً سطراً.",
       "gov.sub": "بُنيت Tenderbox بحيث تكون النزاهة خاصية في النظام نفسه، لا وعداً من القائمين عليه.",
@@ -1459,5 +1527,79 @@
   });
 </script>
 
+<script>
+(function () {
+  var wrap = document.getElementById('speed-anim');
+  if (!wrap) return;
+  var wk = document.getElementById('speed-wk');
+  var segs = [
+    { el: document.getElementById('sseg1'), start: 0,     w: 57.15, dur: 1550, at: 60   },
+    { el: document.getElementById('sseg2'), start: 57.15, w: 14.28, dur: 420,  at: 1650 },
+    { el: document.getElementById('sseg3'), start: 71.43, w: 28.57, dur: 780,  at: 2100 }
+  ];
+  var box = document.getElementById('sbox');
+  var ret = document.getElementById('sret');
+  var cap1 = document.getElementById('scap1');
+  var cap2 = document.getElementById('scap2');
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var timers = [];
+
+  segs.forEach(function (s) {
+    s.el.style.insetInlineStart = s.start + '%';
+    s.el.style.transitionDuration = (s.dur / 1000) + 's';
+  });
+
+  function later(fn, ms) { timers.push(setTimeout(fn, ms)); }
+
+  function setFinal() {
+    segs.forEach(function (s) {
+      s.el.style.width = s.w + '%';
+      s.el.querySelector('span').classList.add('show');
+    });
+    box.style.width = '16px';
+    ret.classList.add('show');
+    cap1.classList.add('show');
+    cap2.classList.add('show');
+    if (wk) wk.textContent = '14';
+  }
+
+  function reset() {
+    timers.forEach(clearTimeout); timers = [];
+    segs.forEach(function (s) {
+      s.el.style.width = '0';
+      s.el.querySelector('span').classList.remove('show');
+    });
+    box.style.width = '0';
+    ret.classList.remove('show');
+    cap1.classList.remove('show');
+    cap2.classList.remove('show');
+    if (wk) wk.textContent = '0';
+  }
+
+  function play() {
+    reset();
+    for (var i = 1; i <= 14; i++) {
+      (function (n) { later(function () { wk.textContent = String(n); }, 150 + n * 195); })(i);
+    }
+    segs.forEach(function (s) {
+      later(function () { s.el.style.width = s.w + '%'; }, s.at);
+      later(function () { s.el.querySelector('span').classList.add('show'); }, s.at + Math.max(s.dur - 250, 200));
+    });
+    later(function () { box.style.width = '16px'; }, 350);
+    later(function () { cap2.classList.add('show'); }, 800);
+    later(function () { cap1.classList.add('show'); }, 2950);
+    later(function () { ret.classList.add('show'); }, 3080);
+  }
+
+  if (reduce || !('IntersectionObserver' in window)) { setFinal(); return; }
+
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (e.isIntersecting) { play(); } else { reset(); }
+    });
+  }, { threshold: 0.45 });
+  io.observe(wrap);
+})();
+</script>
 </body>
 </html>
