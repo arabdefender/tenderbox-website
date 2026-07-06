@@ -4,231 +4,123 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Privacy Policy — Tenderbox</title>
-  <meta name="description" content="Tenderbox privacy policy. How we collect, use, and protect your information.">
-  <meta name="robots" content="index, follow">
+  <meta name="description" content="Tenderbox privacy policy — how we collect, use, and protect personal data under UAE Federal Decree-Law No. 45 of 2021 (PDPL).">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
   <style>
     :root {
-      --navy: #0F2D5E; --navy-deep: #081B3D; --blue: #2563EB; --sky: #38BDF8;
-      --white: #FFFFFF; --gray-50: #F8FAFC; --gray-100: #F1F5F9;
-      --gray-200: #E2E8F0; --gray-400: #94A3B8; --gray-500: #64748B;
-      --gray-700: #334155; --text: #0F172A;
+      --navy:       #0F2D5E;
+      --navy-deep:  #081B3D;
+      --blue:       #2563EB;
+      --white:      #FFFFFF;
+      --gray-50:    #F8FAFC;
+      --gray-200:   #E2E8F0;
+      --gray-400:   #94A3B8;
+      --gray-500:   #64748B;
+      --gray-700:   #334155;
+      --text:       #0F172A;
+      --gold:       #F59E0B;
+      --radius:     12px;
     }
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
     body {
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-      background: var(--white); color: var(--text);
-      -webkit-font-smoothing: antialiased; line-height: 1.6;
+      background: var(--white); color: var(--text); line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
     }
     a { color: var(--blue); text-decoration: none; }
     a:hover { text-decoration: underline; }
-    .container { max-width: 820px; margin: 0 auto; padding: 0 24px; }
-
-    /* Nav */
-    nav#main-nav {
-      position: sticky; top: 0; z-index: 100;
-      background: rgba(255,255,255,.95); backdrop-filter: blur(10px);
-      border-bottom: 1px solid var(--gray-200);
+    .topbar {
+      border-bottom: 1px solid var(--gray-200); background: var(--white);
     }
-    .nav-inner {
+    .topbar-inner {
+      max-width: 820px; margin: 0 auto; padding: 16px 24px;
       display: flex; align-items: center; justify-content: space-between;
-      padding: 16px 0; max-width: 1200px; margin: 0 auto;
     }
-    .nav-logo {
-      display: inline-flex; align-items: center; gap: 9px;
-      font-weight: 800; font-size: 18px; color: var(--navy); letter-spacing: -0.4px;
+    .logo { display: flex; align-items: center; gap: 10px; font-size: 17px; font-weight: 800; color: var(--navy); text-decoration: none; }
+    .logo:hover { text-decoration: none; }
+    .logo svg { width: 30px; height: 30px; }
+    .topbar a.back { font-size: 13px; font-weight: 500; color: var(--gray-500); }
+    main { max-width: 820px; margin: 0 auto; padding: 56px 24px 80px; }
+    h1 { font-size: 34px; font-weight: 800; color: var(--navy); letter-spacing: -.02em; line-height: 1.2; }
+    .meta { font-size: 13px; color: var(--gray-400); margin: 10px 0 36px; }
+    h2 { font-size: 19px; font-weight: 700; color: var(--navy); margin: 36px 0 10px; }
+    p, li { font-size: 15px; color: var(--gray-700); }
+    p + p { margin-top: 10px; }
+    ul { padding-left: 22px; margin: 8px 0; }
+    li { margin: 4px 0; }
+    .placeholder {
+      background: rgba(245,158,11,.12); color: #92400E;
+      border: 1px dashed rgba(245,158,11,.5); border-radius: 4px;
+      padding: 1px 6px; font-weight: 600; white-space: nowrap;
     }
-    .nav-logo-icon { width: 32px; height: 32px; }
-    .nav-back {
-      font-size: 13px; font-weight: 600; color: var(--gray-500);
-      transition: color 0.18s;
-    }
-    .nav-back:hover { color: var(--blue); text-decoration: none; }
-
-    /* Hero */
-    .legal-hero {
-      background: linear-gradient(135deg, var(--navy-deep) 0%, var(--navy) 100%);
-      color: var(--white); padding: 80px 0 60px; position: relative; overflow: hidden;
-    }
-    .legal-hero::before {
-      content: ''; position: absolute; inset: 0;
-      background-image: radial-gradient(circle, rgba(255,255,255,.04) 1px, transparent 1px);
-      background-size: 28px 28px; pointer-events: none;
-    }
-    .legal-hero .container { position: relative; z-index: 1; }
-    .legal-tag {
-      display: inline-block; padding: 5px 12px; border-radius: 100px;
-      background: rgba(56,189,248,.12); color: var(--sky);
-      font-size: 11px; font-weight: 700; letter-spacing: 0.08em;
-      text-transform: uppercase; border: 1px solid rgba(56,189,248,.2);
-      margin-bottom: 16px;
-    }
-    .legal-title {
-      font-size: clamp(32px, 5vw, 44px); font-weight: 800;
-      letter-spacing: -1px; line-height: 1.1; margin-bottom: 14px;
-    }
-    .legal-meta { font-size: 14px; color: rgba(255,255,255,.6); }
-
-    /* Body */
-    main { padding: 60px 0 100px; }
-    main h2 {
-      font-size: 22px; font-weight: 800; color: var(--navy);
-      margin: 40px 0 14px; letter-spacing: -0.3px;
-    }
-    main h2:first-child { margin-top: 0; }
-    main h3 {
-      font-size: 16px; font-weight: 700; color: var(--navy);
-      margin: 24px 0 8px;
-    }
-    main p {
-      font-size: 15px; color: var(--gray-700); margin-bottom: 14px;
-    }
-    main ul { padding-left: 22px; margin-bottom: 14px; }
-    main ul li {
-      font-size: 15px; color: var(--gray-700); margin-bottom: 6px;
-    }
-    .legal-callout {
-      background: var(--gray-50); border-left: 3px solid var(--blue);
-      padding: 16px 20px; margin: 24px 0; border-radius: 0 8px 8px 0;
-      font-size: 14px; color: var(--gray-700);
-    }
-
-    /* Footer */
-    footer {
-      background: var(--navy-deep); color: rgba(255,255,255,.6);
-      padding: 32px 0; font-size: 13px;
-    }
-    footer .container {
-      display: flex; justify-content: space-between; align-items: center;
-      flex-wrap: wrap; gap: 12px; max-width: 1200px;
-    }
-    footer a { color: rgba(255,255,255,.6); }
-    footer a:hover { color: var(--white); text-decoration: none; }
-    .footer-links { display: flex; gap: 20px; }
-
-    @media (max-width: 600px) {
-      .legal-hero { padding: 60px 0 40px; }
-      main { padding: 40px 0 60px; }
-    }
+    footer { border-top: 1px solid var(--gray-200); padding: 24px; text-align: center; font-size: 12px; color: var(--gray-400); }
+    footer a { color: var(--gray-500); margin: 0 8px; }
   </style>
 </head>
 <body>
 
-<nav id="main-nav">
-  <div class="container">
-    <div class="nav-inner">
-      <a href="/" class="nav-logo">
-        <svg class="nav-logo-icon" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg" fill="none">
-          <rect width="40" height="40" rx="9" fill="#0F2D5E"/>
-          <rect x="9" y="13" width="22" height="3.5" rx="1.5" fill="white"/>
-          <rect x="17.5" y="16.5" width="5" height="11" rx="1.5" fill="white"/>
-          <circle cx="29" cy="12" r="5" fill="#2563EB"/>
-          <path d="M27 12l1.5 1.5L31 10.5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-        Tenderbox
-      </a>
-      <a href="/" class="nav-back">← Back to Tenderbox</a>
-    </div>
+<div class="topbar">
+  <div class="topbar-inner">
+    <a href="tenderbox-website.html" class="logo">
+      <svg viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg" fill="none">
+        <rect width="40" height="40" rx="9" fill="#0F2D5E"/>
+        <rect x="9" y="13" width="22" height="3.5" rx="1.5" fill="white"/>
+        <rect x="17.5" y="16.5" width="5" height="11" rx="1.5" fill="white"/>
+        <circle cx="29" cy="12" r="5" fill="#2563EB"/>
+        <path d="M27 12l1.5 1.5L31 10.5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      Tenderbox
+    </a>
+    <a class="back" href="tenderbox-website.html">← Back to site</a>
   </div>
-</nav>
-
-<section class="legal-hero">
-  <div class="container">
-    <span class="legal-tag">Legal</span>
-    <h1 class="legal-title">Privacy Policy</h1>
-    <p class="legal-meta">Last updated: 3 May 2026</p>
-  </div>
-</section>
+</div>
 
 <main>
-  <div class="container">
+  <h1>Privacy Policy</h1>
+  <p class="meta">Last updated: 6 July 2026</p>
 
-    <h2>1. Introduction</h2>
-    <p>This Privacy Policy explains how Tenderbox ("we", "us", "our") collects, uses, and protects information about you when you visit our website or interact with our early-access programme. We are committed to handling personal data lawfully, transparently, and in line with applicable UAE and international data protection standards.</p>
-    <p>Tenderbox is currently in early access. This policy will be revised before the platform launches to commercial customers, and any material changes will be communicated to registered users.</p>
+  <h2>1. Who we are</h2>
+  <p>Tenderbox is a construction tendering platform operated from Dubai, United Arab Emirates by <span class="placeholder">[Legal entity name &amp; address — GRAHAM TO CONFIRM]</span> ("Tenderbox", "we", "us"). We are the data controller for the personal data described in this policy. We process personal data in accordance with UAE Federal Decree-Law No. 45 of 2021 on the Protection of Personal Data (the "PDPL").</p>
 
-    <h2>2. Who we are</h2>
-    <p>Tenderbox is a construction tendering platform under development, based in Dubai, United Arab Emirates. You can contact us at <a href="mailto:hello@tenderbox.ae">hello@tenderbox.ae</a> for any privacy-related queries.</p>
+  <h2>2. What we collect</h2>
+  <ul>
+    <li><strong>Contact form data</strong> — name, company, work email, phone number, and your area of interest, when you request a demo or register interest.</li>
+    <li><strong>Account data</strong> — name, work email, role, company details, and login records, when you or your organisation creates a Tenderbox account.</li>
+    <li><strong>Tender and bid data</strong> — tender documents, bills of quantities, bid submissions, and related business information uploaded to the platform. This is primarily business data, but may include contact details of individuals (e.g. named representatives of contracting firms).</li>
+    <li><strong>Technical data</strong> — basic usage and log information needed to run and secure the service.</li>
+  </ul>
 
-    <h2>3. Information we collect</h2>
-    <p>We collect information you provide to us directly when you fill in the contact or early-access form on our website. This typically includes:</p>
-    <ul>
-      <li>Your name</li>
-      <li>Your work email address and phone number</li>
-      <li>Your company name and stated role or interest</li>
-      <li>Any additional information you choose to share with us in correspondence</li>
-    </ul>
-    <p>We also collect limited technical information automatically when you visit our website, such as your IP address, browser type, device type, referring page, and pages viewed. This is used solely to understand how the site is being used and to keep it secure.</p>
+  <h2>3. Why we process it</h2>
+  <ul>
+    <li>To respond to enquiries and demo requests.</li>
+    <li>To provide, operate, and support the platform, including sealed-bid handling, bid analysis, and audit trails.</li>
+    <li>To maintain security, prevent misuse, and meet legal obligations.</li>
+    <li>To send service communications, and — only with your consent — occasional product updates. You can opt out at any time.</li>
+  </ul>
 
-    <h2>4. How we use your information</h2>
-    <p>We use the information you provide to:</p>
-    <ul>
-      <li>Respond to your enquiry or demo request</li>
-      <li>Communicate with you about the Tenderbox early-access programme</li>
-      <li>Review contractor database registrations against our pre-qualification criteria</li>
-      <li>Improve the website and our communications</li>
-      <li>Comply with our legal and regulatory obligations</li>
-    </ul>
-    <p>We will not contact you for marketing purposes without a clear basis to do so, and you can opt out of further communications at any time by replying to any email from us or writing to <a href="mailto:hello@tenderbox.ae">hello@tenderbox.ae</a>.</p>
+  <h2>4. No sale of personal data</h2>
+  <p>We do not sell personal data, and we do not share your tender or bid data with other clients. Client data is used solely to provide the service to that client. We use trusted service providers (e.g. hosting) only as needed to run the platform, under appropriate contractual safeguards, including where data is transferred outside the UAE as permitted by the PDPL.</p>
 
-    <h2>5. Sharing your information</h2>
-    <p>We do not sell your personal information. We may share it only with:</p>
-    <ul>
-      <li>Service providers who help us operate the website, our email systems, and our customer-relationship tools, and who are bound by appropriate confidentiality obligations</li>
-      <li>Professional advisors, where required for legal, accounting, or compliance purposes</li>
-      <li>Authorities, where required by law or to protect our legal rights</li>
-    </ul>
+  <h2>5. Retention</h2>
+  <p>We keep personal data only as long as needed for the purposes above: contact enquiries for up to 24 months after our last interaction; account and tender data for the life of the client relationship plus any period required for legal, audit, or dispute-resolution purposes; after which data is deleted or anonymised.</p>
 
-    <h2>6. International transfers</h2>
-    <p>Some of the service providers we use may process information outside the United Arab Emirates. Where this happens, we put appropriate safeguards in place to protect your information consistent with this policy.</p>
+  <h2>6. Your rights</h2>
+  <p>Under the PDPL you have the right to access, correct, and request deletion of your personal data; to restrict or object to certain processing; to request a portable copy of your data; and to withdraw consent where processing is based on consent. To exercise any of these rights, contact us at <a href="mailto:hello@tenderbox.ae">hello@tenderbox.ae</a>. You may also lodge a complaint with the UAE Data Office.</p>
 
-    <h2>7. How long we keep your information</h2>
-    <p>We keep the information you provide for as long as is necessary to respond to your enquiry, manage your participation in the early-access programme, and comply with our legal obligations. If you ask us to delete your information, we will do so unless we are required to retain it.</p>
+  <h2>7. Contact</h2>
+  <p>Questions about this policy or our data practices: <a href="mailto:hello@tenderbox.ae">hello@tenderbox.ae</a>, or write to <span class="placeholder">[Legal entity name &amp; address — GRAHAM TO CONFIRM]</span>, Dubai, UAE.</p>
 
-    <h2>8. Security</h2>
-    <p>We use reasonable technical and organisational measures to protect personal information against unauthorised access, loss, or disclosure. No system is perfectly secure, but we treat the protection of your information as a priority and review our practices regularly.</p>
-
-    <h2>9. Your rights</h2>
-    <p>Subject to applicable law, you have the right to:</p>
-    <ul>
-      <li>Request access to the personal information we hold about you</li>
-      <li>Ask us to correct inaccurate information</li>
-      <li>Ask us to delete your information</li>
-      <li>Object to or restrict certain uses of your information</li>
-      <li>Withdraw any consent you have previously given</li>
-    </ul>
-    <p>To exercise any of these rights, please contact us at <a href="mailto:hello@tenderbox.ae">hello@tenderbox.ae</a>. We will respond within a reasonable timeframe.</p>
-
-    <h2>10. Cookies</h2>
-    <p>Our website may use a small number of cookies and similar technologies to make the site work and to understand how it is used. We do not use advertising or tracking cookies. You can control cookies through your browser settings; disabling them may affect the functionality of the site.</p>
-
-    <h2>11. Children</h2>
-    <p>Tenderbox is a business platform and is not directed to children. We do not knowingly collect information from anyone under the age of 18.</p>
-
-    <h2>12. Changes to this policy</h2>
-    <p>We may update this Privacy Policy from time to time. The "Last updated" date at the top of this page indicates when it was most recently revised. Material changes will be notified to you where appropriate.</p>
-
-    <h2>13. Contact us</h2>
-    <p>If you have any questions about this Privacy Policy or how we handle your information, please contact us at <a href="mailto:hello@tenderbox.ae">hello@tenderbox.ae</a>.</p>
-
-    <div class="legal-callout">
-      <strong>Please note:</strong> This policy covers the Tenderbox marketing website and the early-access programme only. A separate, more detailed data processing agreement will govern use of the Tenderbox platform when it becomes commercially available.
-    </div>
-
-  </div>
+  <p style="margin-top:28px;font-size:13px;color:var(--gray-400);">We may update this policy from time to time; the latest version will always be posted here with a revised date.</p>
 </main>
 
 <footer>
-  <div class="container">
-    <span>© 2026 Tenderbox. All rights reserved. Dubai, UAE.</span>
-    <div class="footer-links">
-      <a href="/privacy.html">Privacy</a>
-      <a href="/terms.html">Terms</a>
-      <a href="mailto:hello@tenderbox.ae">hello@tenderbox.ae</a>
-    </div>
+  © 2026 Tenderbox. All rights reserved. Dubai, UAE.
+  <div style="margin-top:8px;">
+    <a href="privacy.html">Privacy</a>
+    <a href="terms.html">Terms</a>
+    <a href="mailto:hello@tenderbox.ae">hello@tenderbox.ae</a>
   </div>
 </footer>
 

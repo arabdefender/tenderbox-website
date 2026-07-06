@@ -3,761 +3,730 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tenderbox — Construction Tendering, Reimagined</title>
-  <meta name="description" content="Tenderbox digitises construction tendering from BOQ to award pack. Sealed bids, instant AI analysis, and full audit trail. Built for UAE developers.">
-  <meta property="og:title" content="Tenderbox — Tendering in hours, not weeks">
-  <meta property="og:description" content="The construction tendering platform that replaces 4–6 week manual cycles with hours. Sealed bids, AI analysis, complete governance.">
+  <title>Tenderbox — Sealed, Auditable Construction Tendering</title>
+  <meta name="description" content="Tenderbox digitises construction tendering for UAE developers and QS firms. Sealed bids, dual-approval opening, AI-assisted BOQ analysis, and an immutable audit trail. Award pack in hours, not weeks.">
+  <meta property="og:title" content="Tenderbox — Tendering in hours, not weeks. Governed at every step.">
+  <meta property="og:description" content="Sealed bids, controlled opening, instant commercial analysis. The tendering platform built for UAE developers and QS practices.">
   <meta property="og:type" content="website">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
 
   <style>
-    /* ─── DESIGN TOKENS ─────────────────────────────────────────────── */
+    /* ── TOKENS ─────────────────────────────────────────────────────── */
     :root {
-      --navy:       #0F2D5E;
-      --navy-deep:  #081B3D;
-      --navy-mid:   #1B3B6F;
-      --blue:       #2563EB;
-      --blue-hover: #1D4ED8;
-      --sky:        #38BDF8;
-      --teal:       #0D9488;
-      --white:      #FFFFFF;
-      --gray-50:    #F8FAFC;
-      --gray-100:   #F1F5F9;
-      --gray-200:   #E2E8F0;
-      --gray-400:   #94A3B8;
-      --gray-500:   #64748B;
-      --gray-700:   #334155;
-      --gray-800:   #1E293B;
-      --text:       #0F172A;
-      --gold:       #F59E0B;
-
-      --radius-sm: 6px;
-      --radius:    12px;
-      --radius-lg: 20px;
-      --shadow-sm: 0 1px 3px rgba(0,0,0,.06), 0 1px 2px rgba(0,0,0,.04);
-      --shadow:    0 4px 24px rgba(15,45,94,.08), 0 1px 4px rgba(15,45,94,.04);
-      --shadow-lg: 0 12px 48px rgba(15,45,94,.14), 0 4px 12px rgba(15,45,94,.06);
-      --transition: all 0.22s cubic-bezier(0.4,0,0.2,1);
+      --ink:        #101418;
+      --ink-soft:   #2A2F35;
+      --ink-mute:   #5C6167;
+      --ink-faint:  #8A8F94;
+      --paper:      #FAF8F4;
+      --paper-warm: #F4F0E8;
+      --paper-deep: #EDE8DE;
+      --line:       rgba(16,20,24,.14);
+      --line-soft:  rgba(16,20,24,.08);
+      --oxide:      #B0611A;
+      --oxide-deep: #8F4D12;
+      --oxide-soft: #C77B3B;
+      --oxide-wash: rgba(176,97,26,.07);
+      --ok:         #3D6B4F;
+      --warn:       #9A5B10;
+      --font-head:  'Space Grotesk', 'Archivo', sans-serif;
+      --font-body:  'Inter', -apple-system, 'Segoe UI', sans-serif;
+      --max:        1160px;
     }
 
-    /* ─── RESET ─────────────────────────────────────────────────────── */
+    /* ── RESET ──────────────────────────────────────────────────────── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
+    html { scroll-behavior: smooth; scroll-padding-top: 96px; }
     body {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-      background: var(--white);
-      color: var(--text);
+      font-family: var(--font-body);
+      background: var(--paper);
+      color: var(--ink);
       line-height: 1.6;
-      overflow-x: hidden;
+      font-size: 16px;
       -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
     }
-    img { max-width: 100%; }
     a { color: inherit; text-decoration: none; }
+    button { font-family: inherit; }
+    ::selection { background: var(--oxide); color: var(--paper); }
 
-    /* ─── UTILITIES ──────────────────────────────────────────────────── */
-    .container  { max-width: 1180px; margin: 0 auto; padding: 0 24px; }
-    .tag        { display: inline-flex; align-items: center; gap: 6px;
-                  background: rgba(37,99,235,.08); color: var(--blue);
-                  border: 1px solid rgba(37,99,235,.18); border-radius: 100px;
-                  padding: 5px 14px; font-size: 12px; font-weight: 600;
-                  letter-spacing: .04em; text-transform: uppercase; }
-    .tag-teal   { background: rgba(13,148,136,.08); color: var(--teal);
-                  border-color: rgba(13,148,136,.2); }
+    /* ── UTILITIES ──────────────────────────────────────────────────── */
+    .container { max-width: var(--max); margin: 0 auto; padding: 0 28px; }
+    .kicker {
+      display: inline-flex; align-items: center; gap: 10px;
+      font-size: 11.5px; font-weight: 600; letter-spacing: .18em;
+      text-transform: uppercase; color: var(--oxide);
+    }
+    .kicker::before {
+      content: ''; width: 26px; height: 1px; background: var(--oxide);
+    }
     .section-title {
-      font-size: clamp(28px, 3.5vw, 42px);
-      font-weight: 800;
-      color: var(--navy);
-      line-height: 1.18;
-      letter-spacing: -.02em;
+      font-family: var(--font-head);
+      font-size: clamp(30px, 4vw, 46px);
+      font-weight: 600;
+      line-height: 1.12;
+      letter-spacing: -.015em;
+      color: var(--ink);
     }
     .section-sub {
-      font-size: 17px;
-      color: var(--gray-500);
-      max-width: 560px;
-      line-height: 1.65;
-      margin-top: 14px;
+      font-size: 16.5px; color: var(--ink-mute); line-height: 1.7;
+      max-width: 580px; margin-top: 18px;
     }
+    .num { font-variant-numeric: tabular-nums; }
     .btn {
-      display: inline-flex; align-items: center; gap: 8px;
-      padding: 12px 24px; border-radius: var(--radius-sm);
-      font-size: 15px; font-weight: 600;
-      cursor: pointer; border: none; transition: var(--transition);
+      display: inline-flex; align-items: center; gap: 9px;
+      padding: 13px 26px; font-size: 14.5px; font-weight: 600;
+      letter-spacing: .01em; cursor: pointer; border: 1px solid transparent;
+      transition: background .18s ease, color .18s ease, border-color .18s ease;
       white-space: nowrap;
     }
-    .btn-primary {
-      background: var(--blue); color: var(--white);
-      box-shadow: 0 1px 3px rgba(37,99,235,.25), 0 4px 16px rgba(37,99,235,.2);
-    }
-    .btn-primary:hover { background: var(--blue-hover); transform: translateY(-1px);
-      box-shadow: 0 4px 24px rgba(37,99,235,.35); }
-    .btn-outline {
-      background: transparent; color: var(--navy);
-      border: 1.5px solid var(--gray-200);
-    }
-    .btn-outline:hover { border-color: var(--blue); color: var(--blue); background: rgba(37,99,235,.04); }
-    .btn-ghost-white {
-      background: rgba(255,255,255,.1); color: var(--white);
-      border: 1.5px solid rgba(255,255,255,.25); backdrop-filter: blur(8px);
-    }
-    .btn-ghost-white:hover { background: rgba(255,255,255,.18); }
+    .btn-ink { background: var(--ink); color: var(--paper); }
+    .btn-ink:hover { background: var(--oxide-deep); }
+    .btn-line { background: transparent; color: var(--ink); border-color: var(--line); }
+    .btn-line:hover { border-color: var(--ink); }
 
-    /* ─── SCROLL ANIMATION ───────────────────────────────────────────── */
-    .fade-up {
-      opacity: 0; transform: translateY(28px);
-      transition: opacity 0.55s ease, transform 0.55s ease;
+    /* ── SCROLL REVEAL ──────────────────────────────────────────────── */
+    .reveal { opacity: 0; transform: translateY(22px); transition: opacity .6s ease, transform .6s ease; }
+    .reveal.in { opacity: 1; transform: none; }
+    .rd-1 { transition-delay: .08s; } .rd-2 { transition-delay: .16s; }
+    .rd-3 { transition-delay: .24s; } .rd-4 { transition-delay: .32s; }
+    @media (prefers-reduced-motion: reduce) {
+      .reveal { opacity: 1; transform: none; transition: none; }
     }
-    .fade-up.visible { opacity: 1; transform: translateY(0); }
-    .fade-up-delay-1 { transition-delay: 0.1s; }
-    .fade-up-delay-2 { transition-delay: 0.2s; }
-    .fade-up-delay-3 { transition-delay: 0.3s; }
-    .fade-up-delay-4 { transition-delay: 0.4s; }
-    .fade-up-delay-5 { transition-delay: 0.5s; }
-    .fade-up-delay-6 { transition-delay: 0.6s; }
 
-    /* ─── NAV ────────────────────────────────────────────────────────── */
-    nav {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-      background: rgba(255,255,255,.85); backdrop-filter: blur(20px);
-      border-bottom: 1px solid var(--gray-200);
-      transition: var(--transition);
+    /* ── TOP BAR ────────────────────────────────────────────────────── */
+    .topbar {
+      background: var(--ink); color: rgba(250,248,244,.72);
+      font-size: 12px; letter-spacing: .06em;
+      text-align: center; padding: 8px 20px;
     }
-    nav.scrolled { background: rgba(255,255,255,.95); box-shadow: var(--shadow-sm); }
+    .topbar strong { color: var(--paper); font-weight: 600; }
+    .topbar .sep { margin: 0 10px; color: rgba(250,248,244,.3); }
+
+    /* ── NAV ────────────────────────────────────────────────────────── */
+    header.site-nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(250,248,244,.92);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--line-soft);
+    }
+    header.site-nav.scrolled { border-bottom-color: var(--line); }
     .nav-inner {
       display: flex; align-items: center; justify-content: space-between;
-      height: 68px;
+      height: 72px; gap: 24px;
     }
-    .nav-logo {
-      display: flex; align-items: center; gap: 10px;
-      font-size: 18px; font-weight: 800; color: var(--navy);
-      letter-spacing: -.02em;
+    .brand {
+      display: flex; align-items: center; gap: 11px;
+      font-family: var(--font-head); font-size: 19px; font-weight: 700;
+      letter-spacing: -.01em; color: var(--ink);
     }
-    .nav-logo-icon {
-      width: 34px; height: 34px; flex-shrink: 0;
+    .brand-mark {
+      width: 32px; height: 32px; flex-shrink: 0; display: block;
     }
     .nav-links {
-      display: flex; align-items: center; gap: 32px;
-      list-style: none;
+      display: flex; align-items: center; gap: 30px; list-style: none;
     }
     .nav-links a {
-      font-size: 14px; font-weight: 500; color: var(--gray-700);
-      transition: color 0.18s;
+      font-size: 13.5px; font-weight: 500; color: var(--ink-soft);
+      padding: 4px 0; border-bottom: 1px solid transparent;
+      transition: color .16s, border-color .16s;
     }
-    .nav-links a:hover { color: var(--navy); }
-    .nav-cta { display: flex; align-items: center; gap: 10px; }
-    .nav-cta .btn { padding: 9px 18px; font-size: 14px; }
+    .nav-links a:hover { color: var(--oxide-deep); border-bottom-color: var(--oxide); }
+    .nav-right { display: flex; align-items: center; gap: 20px; }
+    .lang-toggle {
+      display: inline-flex; align-items: center; gap: 7px;
+      font-size: 12.5px; color: var(--ink-mute);
+      border: 1px solid var(--line-soft); padding: 6px 12px;
+      background: transparent; cursor: pointer;
+      transition: border-color .16s;
+    }
+    .lang-toggle:hover { border-color: var(--ink); }
+    .lang-toggle .active { font-weight: 700; color: var(--ink); }
+    .lang-toggle .ar { font-family: var(--font-body); }
+    .nav-right .btn { padding: 10px 20px; font-size: 13.5px; }
+    .nav-burger {
+      display: none; background: none; border: 1px solid var(--line);
+      width: 42px; height: 42px; cursor: pointer;
+      align-items: center; justify-content: center; flex-direction: column; gap: 5px;
+    }
+    .nav-burger span { display: block; width: 18px; height: 1.5px; background: var(--ink); }
+    .mobile-menu {
+      display: none; border-top: 1px solid var(--line-soft);
+      background: var(--paper); padding: 12px 28px 24px;
+    }
+    .mobile-menu.open { display: block; }
+    .mobile-menu a {
+      display: block; padding: 12px 0; font-size: 15px; font-weight: 500;
+      border-bottom: 1px solid var(--line-soft); color: var(--ink-soft);
+    }
+    .mobile-menu a:last-child { border-bottom: none; }
 
-    /* ─── HERO ───────────────────────────────────────────────────────── */
-    .hero {
-      padding-top: 140px; padding-bottom: 100px;
-      background: var(--white);
-      position: relative; overflow: hidden;
+    /* ── HERO ───────────────────────────────────────────────────────── */
+    .hero { padding: 96px 0 104px; border-bottom: 1px solid var(--line-soft); position: relative; }
+    .hero-grid {
+      display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, .95fr);
+      gap: 72px; align-items: center;
     }
-    .hero::before {
-      content: '';
-      position: absolute; inset: 0;
-      background-image: radial-gradient(circle, rgba(37,99,235,.06) 1px, transparent 1px);
-      background-size: 28px 28px;
-      mask-image: radial-gradient(ellipse 80% 60% at 50% 30%, black 40%, transparent 100%);
-      pointer-events: none;
+    .hero h1 {
+      font-family: var(--font-head);
+      font-size: clamp(38px, 4.8vw, 62px);
+      font-weight: 700; line-height: 1.05; letter-spacing: -.02em;
+      margin: 26px 0 24px;
     }
-    .hero-inner {
-      display: grid; grid-template-columns: 1fr 1fr;
-      gap: 60px; align-items: center;
-    }
-    .hero-eyebrow { margin-bottom: 20px; }
-    .hero-title {
-      font-size: clamp(40px, 5vw, 64px);
-      font-weight: 900;
-      color: var(--navy);
-      line-height: 1.08;
-      letter-spacing: -.035em;
-      margin-bottom: 20px;
-    }
-    .hero-title span { color: var(--blue); }
+    .hero h1 em { font-style: normal; color: var(--oxide); }
     .hero-sub {
-      font-size: 18px; color: var(--gray-500); line-height: 1.7;
-      margin-bottom: 36px; max-width: 500px;
+      font-size: 17.5px; color: var(--ink-mute); line-height: 1.7;
+      max-width: 520px; margin-bottom: 38px;
     }
-    .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 40px; }
-    .hero-trust {
-      display: flex; align-items: center; gap: 20px;
-      font-size: 13px; color: var(--gray-400); font-weight: 500;
+    .hero-actions { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 46px; }
+    .hero-facts {
+      display: flex; flex-wrap: wrap; gap: 0;
+      border-top: 1px solid var(--line-soft);
+      padding-top: 22px; font-size: 12.5px;
+      letter-spacing: .1em; text-transform: uppercase;
+      color: var(--ink-faint); font-weight: 500;
     }
-    .hero-trust-sep { width: 1px; height: 14px; background: var(--gray-200); }
+    .hero-facts span { padding-right: 22px; margin-right: 22px; border-right: 1px solid var(--line-soft); }
+    .hero-facts span:last-child { border-right: none; margin-right: 0; padding-right: 0; }
 
-    /* ─── PRODUCT MOCKUP ─────────────────────────────────────────────── */
-    .hero-visual {
-      position: relative; display: flex; justify-content: center; align-items: flex-start;
+    /* ── HERO CARD (tender analysis) ────────────────────────────────── */
+    .tender-card {
+      background: #FFFFFF;
+      border: 1px solid var(--line);
+      box-shadow: 0 1px 2px rgba(16,20,24,.05), 0 24px 60px -24px rgba(16,20,24,.22);
     }
-    .mockup-window {
-      width: 100%; max-width: 520px;
-      background: var(--white);
-      border-radius: var(--radius-lg);
-      border: 1px solid var(--gray-200);
-      box-shadow: var(--shadow-lg);
-      overflow: hidden;
+    .tc-head {
+      display: flex; justify-content: space-between; align-items: flex-start;
+      padding: 20px 24px 16px; border-bottom: 1px solid var(--line-soft);
     }
-    .mockup-bar {
-      display: flex; align-items: center; gap: 6px;
-      padding: 12px 16px;
-      background: var(--gray-50);
-      border-bottom: 1px solid var(--gray-200);
+    .tc-title { font-family: var(--font-head); font-size: 15px; font-weight: 600; }
+    .tc-meta { font-size: 11.5px; color: var(--ink-faint); margin-top: 3px; }
+    .tc-state {
+      font-size: 10.5px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
+      color: var(--ok); border: 1px solid rgba(61,107,79,.35);
+      padding: 4px 10px; white-space: nowrap;
     }
-    .mockup-dot {
-      width: 10px; height: 10px; border-radius: 50%;
+    .tc-stats {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      border-bottom: 1px solid var(--line-soft);
     }
-    .mockup-dot:nth-child(1) { background: #FF5F57; }
-    .mockup-dot:nth-child(2) { background: #FFBD2E; }
-    .mockup-dot:nth-child(3) { background: #28C840; }
-    .mockup-url {
-      flex: 1; background: var(--white); border-radius: 4px;
-      border: 1px solid var(--gray-200); padding: 4px 10px;
-      font-size: 11px; color: var(--gray-400); margin-left: 8px;
+    .tc-stat { padding: 14px 24px; border-right: 1px solid var(--line-soft); }
+    .tc-stat:last-child { border-right: none; }
+    .tc-stat b {
+      display: block; font-family: var(--font-head);
+      font-size: 22px; font-weight: 700; font-variant-numeric: tabular-nums;
     }
-    .mockup-body { padding: 20px; }
-    .mockup-header {
+    .tc-stat i { font-style: normal; font-size: 10.5px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-faint); }
+    .tc-table { width: 100%; border-collapse: collapse; }
+    .tc-table th {
+      font-size: 10px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase;
+      color: var(--ink-faint); text-align: left;
+      padding: 11px 24px 9px; border-bottom: 1px solid var(--line-soft);
+    }
+    .tc-table th.r, .tc-table td.r { text-align: right; }
+    .tc-table td {
+      font-size: 13px; padding: 12px 24px;
+      border-bottom: 1px solid var(--line-soft);
+      font-variant-numeric: tabular-nums;
+    }
+    .tc-table tr:last-child td { border-bottom: none; }
+    .tc-low  { color: var(--ok); font-weight: 600; }
+    .tc-high { color: var(--oxide-deep); font-weight: 600; }
+    .tc-lead td { background: var(--oxide-wash); }
+    .tc-tag {
+      font-size: 9.5px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+      padding: 3px 8px; border: 1px solid currentColor;
+    }
+    .tc-tag.low { color: var(--ok); }
+    .tc-tag.rev { color: var(--warn); }
+    .tc-tag.high { color: var(--oxide-deep); }
+    .tc-foot {
       display: flex; justify-content: space-between; align-items: center;
-      margin-bottom: 16px;
+      padding: 13px 24px; background: var(--paper);
+      border-top: 1px solid var(--line-soft);
+      font-size: 11px; color: var(--ink-faint);
     }
-    .mockup-title-text { font-size: 14px; font-weight: 700; color: var(--navy); }
-    .mockup-badge {
-      background: rgba(16,185,129,.1); color: #059669;
-      border-radius: 100px; padding: 3px 10px; font-size: 11px; font-weight: 600;
+    .tc-foot .tc-actions { display: flex; gap: 10px; }
+    .tc-foot .tc-actions span {
+      font-size: 11px; font-weight: 600; color: var(--ink);
+      border: 1px solid var(--line); padding: 6px 12px;
     }
-    .mockup-stats {
-      display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;
-      margin-bottom: 16px;
-    }
-    .mockup-stat {
-      background: var(--gray-50); border-radius: 8px;
-      padding: 10px 12px; border: 1px solid var(--gray-100);
-    }
-    .mockup-stat-val { font-size: 18px; font-weight: 800; color: var(--navy); }
-    .mockup-stat-lbl { font-size: 10px; color: var(--gray-400); margin-top: 1px; }
-    .mockup-table { width: 100%; border-collapse: collapse; }
-    .mockup-table th {
-      font-size: 10px; font-weight: 600; color: var(--gray-400);
-      text-transform: uppercase; letter-spacing: .04em;
-      padding: 6px 10px; text-align: left;
-      border-bottom: 1px solid var(--gray-200);
-    }
-    .mockup-table td {
-      font-size: 12px; color: var(--gray-800);
-      padding: 9px 10px; border-bottom: 1px solid var(--gray-100);
-    }
-    .mockup-table tr:last-child td { border-bottom: none; }
-    .mockup-table .low  { color: #059669; font-weight: 700; }
-    .mockup-table .high { color: #DC2626; font-weight: 700; }
-    .mockup-table .mid  { color: var(--gray-700); }
-    .mockup-row-highlight { background: rgba(37,99,235,.04); }
-    .mockup-flag {
-      display: inline-block; font-size: 9px; font-weight: 700;
-      padding: 2px 6px; border-radius: 3px; text-transform: uppercase;
-    }
-    .flag-low  { background: rgba(5,150,105,.12); color: #059669; }
-    .flag-high { background: rgba(220,38,38,.1);  color: #DC2626; }
-    .flag-risk { background: rgba(245,158,11,.12); color: #B45309; }
-    .mockup-footer {
-      display: flex; gap: 8px; margin-top: 14px; padding-top: 14px;
-      border-top: 1px solid var(--gray-200);
-    }
-    .mockup-btn-sm {
-      flex: 1; text-align: center; padding: 7px;
-      border-radius: 6px; font-size: 11px; font-weight: 600;
-      cursor: pointer;
-    }
-    .mockup-btn-blue { background: var(--blue); color: white; }
-    .mockup-btn-gray { background: var(--gray-100); color: var(--gray-700); }
+    .tc-foot .tc-actions span:first-child { background: var(--ink); color: var(--paper); border-color: var(--ink); }
 
-    /* ─── PROBLEM ────────────────────────────────────────────────────── */
-    .section-problem {
-      padding: 100px 0;
-      background: var(--gray-50);
-      border-top: 1px solid var(--gray-200);
-      border-bottom: 1px solid var(--gray-200);
-    }
-    .problem-head { text-align: center; margin-bottom: 60px; }
-    .problem-head .section-sub { margin: 14px auto 0; }
+    /* ── PROBLEM ────────────────────────────────────────────────────── */
+    .sec { padding: 104px 0; }
+    .sec-head { max-width: 640px; margin-bottom: 64px; }
+    .sec-warm { background: var(--paper-warm); border-top: 1px solid var(--line-soft); border-bottom: 1px solid var(--line-soft); }
     .problem-grid {
-      display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px;
+      display: grid; grid-template-columns: repeat(2, 1fr);
+      border-top: 1px solid var(--line); border-left: 1px solid var(--line);
     }
-    .problem-card {
-      background: var(--white); border-radius: var(--radius);
-      padding: 32px; border: 1px solid var(--gray-200);
-      box-shadow: var(--shadow-sm);
-      transition: var(--transition);
+    .problem-cell {
+      border-right: 1px solid var(--line); border-bottom: 1px solid var(--line);
+      padding: 38px 36px; background: var(--paper);
     }
-    .problem-card:hover { box-shadow: var(--shadow); transform: translateY(-2px); }
-    .problem-icon {
-      width: 44px; height: 44px; border-radius: 10px;
-      display: flex; align-items: center; justify-content: center;
-      background: rgba(239,68,68,.08); margin-bottom: 18px;
+    .problem-cell .p-index {
+      font-family: var(--font-head); font-size: 13px; font-weight: 600;
+      color: var(--oxide); letter-spacing: .08em; display: block; margin-bottom: 18px;
+      font-variant-numeric: tabular-nums;
     }
-    .problem-icon svg { width: 22px; height: 22px; }
-    .problem-card h3 { font-size: 17px; font-weight: 700; color: var(--navy); margin-bottom: 8px; }
-    .problem-card p  { font-size: 14px; color: var(--gray-500); line-height: 1.65; }
-    .problem-stat {
-      display: inline-block; margin-top: 14px;
-      font-size: 13px; font-weight: 700; color: #DC2626;
-      background: rgba(220,38,38,.08); padding: 4px 12px;
-      border-radius: 100px;
+    .problem-cell h3 {
+      font-family: var(--font-head); font-size: 19px; font-weight: 600;
+      letter-spacing: -.01em; margin-bottom: 10px; line-height: 1.3;
+    }
+    .problem-cell p { font-size: 14.5px; color: var(--ink-mute); line-height: 1.68; }
+
+    /* ── PROCESS LEDGER ─────────────────────────────────────────────── */
+    .ledger { border-top: 1px solid var(--ink); }
+    .ledger-row {
+      display: grid;
+      grid-template-columns: 84px minmax(0,1fr) minmax(0,1.5fr) 170px;
+      gap: 28px; align-items: baseline;
+      padding: 26px 4px; border-bottom: 1px solid var(--line);
+      transition: background .18s ease;
+    }
+    .ledger-row:hover { background: rgba(176,97,26,.04); }
+    .ledger-num {
+      font-family: var(--font-head); font-size: 26px; font-weight: 600;
+      color: var(--ink); font-variant-numeric: tabular-nums;
+    }
+    .ledger-num::after { content: ''; display: inline-block; width: 18px; height: 1px; background: var(--oxide); margin-left: 12px; vertical-align: 6px; }
+    .ledger-title { font-family: var(--font-head); font-size: 18px; font-weight: 600; letter-spacing: -.01em; }
+    .ledger-desc { font-size: 14px; color: var(--ink-mute); line-height: 1.65; }
+    .ledger-time {
+      font-size: 11.5px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase;
+      color: var(--oxide-deep); text-align: right; font-variant-numeric: tabular-nums;
+      white-space: nowrap;
     }
 
-    /* ─── HOW IT WORKS ───────────────────────────────────────────────── */
-    .section-how {
-      padding: 100px 0;
+    /* ── SPEED COMPARISON ───────────────────────────────────────────── */
+    .speed-bars {
+      max-width: 760px; border-top: 1px solid var(--line);
+      padding-top: 34px; display: grid; gap: 32px;
     }
-    .how-head { text-align: center; margin-bottom: 70px; }
-    .how-head .section-sub { margin: 14px auto 0; }
-    .steps-grid {
-      display: grid; grid-template-columns: repeat(7, 1fr); gap: 0;
-      position: relative;
+    .speed-bar-label {
+      display: block; font-size: 11px; font-weight: 600;
+      letter-spacing: .14em; text-transform: uppercase;
+      color: var(--ink-faint); margin-bottom: 10px;
     }
-    .steps-grid::before {
-      content: '';
-      position: absolute; top: 28px; left: 10%; right: 10%; height: 2px;
-      background: linear-gradient(to right, var(--gray-200) 0%, var(--blue) 50%, var(--teal) 100%);
-      z-index: 0;
-    }
-    .step {
-      display: flex; flex-direction: column; align-items: center;
-      text-align: center; padding: 0 6px; position: relative; z-index: 1;
-    }
-    .step-num {
-      width: 56px; height: 56px; border-radius: 50%;
-      background: var(--white); border: 2px solid var(--gray-200);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 14px; font-weight: 800; color: var(--navy);
-      margin-bottom: 16px;
-      transition: var(--transition);
-      box-shadow: var(--shadow-sm);
-    }
-    .step:hover .step-num {
-      background: var(--blue); color: var(--white);
-      border-color: var(--blue); box-shadow: 0 0 0 6px rgba(37,99,235,.12);
-    }
-    .step-title { font-size: 12px; font-weight: 700; color: var(--navy); margin-bottom: 5px; line-height: 1.3; }
-    .step-desc  { font-size: 11px; color: var(--gray-400); line-height: 1.5; }
-    .step-time {
-      display: inline-block;
-      margin-top: 10px;
-      padding: 3px 9px;
-      border-radius: 100px;
-      font-size: 10px;
-      font-weight: 700;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-      background: rgba(37,99,235,.08);
-      color: var(--blue);
-      border: 1px solid rgba(37,99,235,.16);
+    .speed-bar { height: 12px; }
+    .speed-bar-long { width: 100%; background: var(--paper-deep); border: 1px solid var(--line); }
+    .speed-bar-short { width: 14px; background: var(--oxide); }
+    .speed-bar-cap {
+      display: block; margin-top: 10px; font-size: 13px;
+      color: var(--ink-mute); font-variant-numeric: tabular-nums;
     }
 
-    /* ─── FEATURES ───────────────────────────────────────────────────── */
-    .section-features {
-      padding: 100px 0;
-      background: var(--navy);
-      position: relative; overflow: hidden;
+    /* ── GOVERNANCE ─────────────────────────────────────────────────── */
+    .sec-ink { background: var(--ink); color: var(--paper); }
+    .sec-ink .kicker { color: var(--oxide-soft); }
+    .sec-ink .kicker::before { background: var(--oxide-soft); }
+    .sec-ink .section-title { color: var(--paper); }
+    .sec-ink .section-sub { color: rgba(250,248,244,.62); }
+    .gov-grid {
+      display: grid; grid-template-columns: repeat(2, 1fr); gap: 0;
+      border-top: 1px solid rgba(250,248,244,.18);
     }
-    .section-features::before {
-      content: '';
-      position: absolute; inset: 0;
-      background-image: radial-gradient(circle, rgba(255,255,255,.04) 1px, transparent 1px);
-      background-size: 32px 32px;
-      pointer-events: none;
+    .gov-item {
+      padding: 40px 36px 40px 0;
+      border-bottom: 1px solid rgba(250,248,244,.12);
     }
-    .features-head { text-align: center; margin-bottom: 60px; }
-    .features-head .section-title { color: var(--white); }
-    .features-head .section-sub  { color: rgba(255,255,255,.55); margin: 14px auto 0; }
-    .features-grid {
-      display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;
+    .gov-item:nth-child(odd) { border-right: 1px solid rgba(250,248,244,.12); padding-right: 44px; }
+    .gov-item:nth-child(even) { padding-left: 44px; }
+    .gov-item:nth-last-child(-n+1) { border-bottom: none; }
+    .gov-label {
+      font-size: 11px; font-weight: 600; letter-spacing: .16em; text-transform: uppercase;
+      color: var(--oxide-soft); display: block; margin-bottom: 14px;
     }
-    .feature-card {
-      background: rgba(255,255,255,.06);
-      border: 1px solid rgba(255,255,255,.1);
-      border-radius: var(--radius);
-      padding: 32px; backdrop-filter: blur(4px);
-      transition: var(--transition);
+    .gov-item h3 {
+      font-family: var(--font-head); font-size: 21px; font-weight: 600;
+      letter-spacing: -.01em; margin-bottom: 12px; line-height: 1.3;
     }
-    .feature-card:hover {
-      background: rgba(255,255,255,.1);
-      border-color: rgba(255,255,255,.2);
-      transform: translateY(-3px);
+    .gov-item p { font-size: 14.5px; color: rgba(250,248,244,.6); line-height: 1.7; }
+    .gov-wide {
+      grid-column: 1 / -1; border-right: none !important;
+      padding: 40px 0 8px !important; border-bottom: none;
+      display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1.4fr); gap: 44px;
+      align-items: start;
     }
-    .feature-icon {
-      width: 48px; height: 48px; border-radius: 12px;
-      display: flex; align-items: center; justify-content: center;
-      background: rgba(37,99,235,.3); margin-bottom: 20px;
+    .gov-wide p { max-width: none; }
+    .audit-strip {
+      border: 1px solid rgba(250,248,244,.18);
+      font-size: 12px; font-variant-numeric: tabular-nums;
+      color: rgba(250,248,244,.7);
     }
-    .feature-icon.teal { background: rgba(13,148,136,.3); }
-    .feature-icon.gold { background: rgba(245,158,11,.2); }
-    .feature-icon svg { width: 22px; height: 22px; color: var(--white); }
-    .feature-card h3 {
-      font-size: 18px; font-weight: 700; color: var(--white);
-      margin-bottom: 10px; line-height: 1.25;
+    .audit-strip .ar-row {
+      display: grid; grid-template-columns: 92px 1fr 120px;
+      gap: 14px; padding: 10px 18px;
+      border-bottom: 1px solid rgba(250,248,244,.1);
     }
-    .feature-card p { font-size: 14px; color: rgba(255,255,255,.55); line-height: 1.65; }
-    .feature-list { list-style: none; margin-top: 18px; display: flex; flex-direction: column; gap: 8px; }
-    .feature-list li {
-      display: flex; align-items: flex-start; gap: 8px;
-      font-size: 13px; color: rgba(255,255,255,.65);
-    }
-    .feature-list li::before {
-      content: '✓'; color: var(--sky); font-weight: 700;
-      flex-shrink: 0; line-height: 1.5;
-    }
+    .audit-strip .ar-row:last-child { border-bottom: none; }
+    .audit-strip .ar-t { color: rgba(250,248,244,.45); }
+    .audit-strip .ar-h { color: var(--oxide-soft); text-align: right; font-family: monospace; font-size: 11px; }
+    .audit-cap { font-size: 10.5px; letter-spacing: .1em; text-transform: uppercase; color: rgba(250,248,244,.35); margin-top: 10px; }
 
-    /* ─── DATA FLYWHEEL ──────────────────────────────────────────────── */
-    .section-flywheel {
-      padding: 100px 0;
-      background: var(--gray-50);
-      border-top: 1px solid var(--gray-200);
-      border-bottom: 1px solid var(--gray-200);
+    /* ── ANALYSIS ───────────────────────────────────────────────────── */
+    .split {
+      display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr);
+      gap: 76px; align-items: center;
     }
-    .flywheel-inner {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;
+    .analysis-points { list-style: none; margin-top: 36px; border-top: 1px solid var(--line); }
+    .analysis-points li {
+      display: grid; grid-template-columns: 30px 1fr; gap: 16px;
+      padding: 20px 4px; border-bottom: 1px solid var(--line-soft);
+      align-items: baseline;
     }
-    .flywheel-diagram {
-      display: flex; flex-direction: column; gap: 0;
-      align-items: center; position: relative;
+    .analysis-points .ap-mark {
+      font-family: var(--font-head); font-size: 13px; font-weight: 600;
+      color: var(--oxide); font-variant-numeric: tabular-nums;
     }
-    .flywheel-node {
-      width: 100%; max-width: 340px;
-      background: var(--white); border-radius: var(--radius);
-      border: 1.5px solid var(--gray-200);
-      padding: 20px 24px;
-      box-shadow: var(--shadow-sm);
-      position: relative; z-index: 1;
+    .analysis-points h4 { font-size: 15px; font-weight: 600; margin-bottom: 4px; letter-spacing: -.005em; }
+    .analysis-points p { font-size: 13.5px; color: var(--ink-mute); line-height: 1.65; }
+    .rate-panel {
+      background: #FFFFFF; border: 1px solid var(--line);
+      box-shadow: 0 1px 2px rgba(16,20,24,.05), 0 20px 50px -24px rgba(16,20,24,.18);
     }
-    .flywheel-node.phase1 { border-color: rgba(37,99,235,.3); background: rgba(37,99,235,.03); }
-    .flywheel-node.data   { border-color: rgba(245,158,11,.3);  background: rgba(245,158,11,.03); }
-    .flywheel-node.phase2 { border-color: rgba(13,148,136,.3);  background: rgba(13,148,136,.03); }
-    .flywheel-connector {
-      width: 2px; height: 36px;
-      background: linear-gradient(to bottom, var(--blue), var(--gold));
-      margin: 0 auto; position: relative; z-index: 0;
+    .rate-panel .rp-head {
+      padding: 16px 22px; border-bottom: 1px solid var(--line-soft);
+      display: flex; justify-content: space-between; align-items: center;
     }
-    .flywheel-connector.d2 { background: linear-gradient(to bottom, var(--gold), var(--teal)); }
-    .flywheel-node-head { display: flex; align-items: center; gap: 12px; margin-bottom: 8px; }
-    .flywheel-phase-badge {
-      font-size: 10px; font-weight: 700; letter-spacing: .06em;
-      text-transform: uppercase; padding: 3px 9px; border-radius: 100px;
+    .rate-panel .rp-head b { font-family: var(--font-head); font-size: 13.5px; font-weight: 600; }
+    .rate-panel .rp-head i { font-style: normal; font-size: 10.5px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-faint); }
+    .rp-row {
+      display: grid; grid-template-columns: minmax(0,1.5fr) 90px 90px;
+      gap: 12px; padding: 12px 22px; font-size: 12.5px;
+      border-bottom: 1px solid var(--line-soft);
+      font-variant-numeric: tabular-nums; align-items: center;
     }
-    .badge-blue  { background: rgba(37,99,235,.1);  color: var(--blue); }
-    .badge-gold  { background: rgba(245,158,11,.12); color: #92400E; }
-    .badge-teal  { background: rgba(13,148,136,.1);  color: var(--teal); }
-    .flywheel-node h4 { font-size: 15px; font-weight: 700; color: var(--navy); }
-    .flywheel-node p  { font-size: 13px; color: var(--gray-500); line-height: 1.55; }
-    .flywheel-arrow-label {
-      font-size: 11px; font-weight: 600; color: var(--gray-400);
-      text-align: center; margin: 4px 0;
-    }
-    .flywheel-text h2 { font-size: clamp(26px, 3vw, 38px); font-weight: 800;
-      color: var(--navy); letter-spacing: -.025em; line-height: 1.18; margin-bottom: 16px; }
-    .flywheel-text p { font-size: 16px; color: var(--gray-500); line-height: 1.7; margin-bottom: 20px; }
-    .flywheel-insight {
-      background: var(--white); border-radius: var(--radius);
-      border: 1px solid var(--gray-200); padding: 20px 24px;
-      box-shadow: var(--shadow-sm);
-    }
-    .flywheel-insight p {
-      font-size: 14px; color: var(--gray-700); line-height: 1.6; margin: 0;
-      font-style: italic;
-    }
-    .flywheel-insight span { font-weight: 700; color: var(--navy); font-style: normal; }
+    .rp-row:last-of-type { border-bottom: none; }
+    .rp-row .r { text-align: right; }
+    .rp-row .flag { color: var(--oxide-deep); font-weight: 600; }
+    .rp-bar { height: 3px; background: var(--paper-deep); position: relative; grid-column: 1 / -1; margin-top: 6px; }
+    .rp-bar i { position: absolute; top: 0; bottom: 0; background: var(--oxide); }
+    .rp-cap { padding: 10px 22px; font-size: 10.5px; color: var(--ink-faint); border-top: 1px solid var(--line-soft); text-align: right; }
 
-    /* ─── STATS BAND ─────────────────────────────────────────────────── */
-    .section-stats {
-      padding: 70px 0;
-      background: var(--white);
+    /* ── YOUR DATA ──────────────────────────────────────────────────── */
+    .yourdata { text-align: center; }
+    .yourdata .inner { max-width: 700px; margin: 0 auto; }
+    .yourdata .kicker { justify-content: center; }
+    .yourdata .kicker::after { content: ''; width: 26px; height: 1px; background: var(--oxide); }
+    .yourdata h2 { margin-top: 24px; }
+    .yourdata p.lead { font-size: 17px; color: var(--ink-mute); line-height: 1.75; margin-top: 22px; }
+    .yd-points {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      margin-top: 54px; border-top: 1px solid var(--line);
     }
-    .stats-grid {
-      display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px;
-    }
-    .stat-item { text-align: center; padding: 20px; }
-    .stat-val {
-      font-size: clamp(32px, 4vw, 48px); font-weight: 900;
-      color: var(--navy); letter-spacing: -.03em; line-height: 1;
-      margin-bottom: 8px;
-    }
-    .stat-val span { color: var(--blue); }
-    .stat-lbl { font-size: 14px; color: var(--gray-500); line-height: 1.5; }
+    .yd-point { padding: 26px 26px 0; border-right: 1px solid var(--line-soft); }
+    .yd-point:last-child { border-right: none; }
+    .yd-point h4 { font-family: var(--font-head); font-size: 15.5px; font-weight: 600; margin-bottom: 8px; }
+    .yd-point p { font-size: 13.5px; color: var(--ink-mute); line-height: 1.65; }
 
-    /* ─── CTA / LEAD CAPTURE ─────────────────────────────────────────── */
-    .section-cta {
-      padding: 100px 0;
-      background: linear-gradient(135deg, var(--navy-deep) 0%, var(--navy-mid) 60%, #1a4f8a 100%);
-      position: relative; overflow: hidden;
+    /* ── SECURITY ───────────────────────────────────────────────────── */
+    .sec-table { border-top: 1px solid var(--ink); }
+    .sec-row {
+      display: grid; grid-template-columns: 220px 1fr;
+      gap: 40px; padding: 24px 4px;
+      border-bottom: 1px solid var(--line);
     }
-    .section-cta::before {
-      content: '';
-      position: absolute; inset: 0;
-      background-image: radial-gradient(circle, rgba(255,255,255,.03) 1px, transparent 1px);
-      background-size: 24px 24px;
-      pointer-events: none;
+    .sec-row dt {
+      font-size: 11.5px; font-weight: 600; letter-spacing: .14em;
+      text-transform: uppercase; color: var(--oxide-deep); padding-top: 3px;
     }
-    .cta-inner {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;
-    }
-    .cta-text h2 {
-      font-size: clamp(28px, 3.5vw, 44px); font-weight: 800;
-      color: var(--white); letter-spacing: -.025em; line-height: 1.15; margin-bottom: 16px;
-    }
-    .cta-text p  { font-size: 16px; color: rgba(255,255,255,.6); line-height: 1.65; margin-bottom: 28px; }
-    .cta-trust   { display: flex; flex-direction: column; gap: 10px; }
-    .cta-trust-item {
-      display: flex; align-items: center; gap: 10px;
-      font-size: 14px; color: rgba(255,255,255,.65);
-    }
-    .cta-trust-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--sky); flex-shrink: 0; }
+    .sec-row dd { font-size: 14.5px; color: var(--ink-soft); line-height: 1.65; }
 
-    /* ─── FORM ───────────────────────────────────────────────────────── */
+    /* ── CONTACT ────────────────────────────────────────────────────── */
+    .contact-grid {
+      display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1.05fr);
+      gap: 76px; align-items: start;
+    }
+    .contact-notes { list-style: none; margin-top: 34px; border-top: 1px solid var(--line); }
+    .contact-notes li {
+      padding: 15px 4px; border-bottom: 1px solid var(--line-soft);
+      font-size: 14px; color: var(--ink-mute);
+      display: flex; gap: 14px; align-items: baseline;
+    }
+    .contact-notes li::before { content: '—'; color: var(--oxide); flex-shrink: 0; }
     .lead-form {
-      background: var(--white); border-radius: var(--radius-lg);
-      padding: 36px; box-shadow: var(--shadow-lg);
+      background: #FFFFFF; border: 1px solid var(--line);
+      padding: 38px 38px 32px;
+      box-shadow: 0 1px 2px rgba(16,20,24,.05), 0 20px 50px -26px rgba(16,20,24,.18);
     }
-    .form-title { font-size: 20px; font-weight: 800; color: var(--navy); margin-bottom: 6px; }
-    .form-sub   { font-size: 14px; color: var(--gray-500); margin-bottom: 24px; }
-    .form-tabs  { display: flex; gap: 8px; margin-bottom: 24px; }
-    .form-tab   {
-      flex: 1; text-align: center; padding: 10px;
-      border-radius: var(--radius-sm); font-size: 13px; font-weight: 600;
-      cursor: pointer; border: 1.5px solid var(--gray-200); color: var(--gray-500);
-      transition: var(--transition); background: var(--white);
+    .form-title { font-family: var(--font-head); font-size: 21px; font-weight: 600; letter-spacing: -.01em; }
+    .form-sub { font-size: 13.5px; color: var(--ink-mute); margin: 6px 0 26px; }
+    .form-tabs { display: flex; border: 1px solid var(--line); margin-bottom: 26px; }
+    .form-tab {
+      flex: 1; text-align: center; padding: 11px 8px;
+      font-size: 13px; font-weight: 600; cursor: pointer;
+      background: transparent; border: none; color: var(--ink-mute);
+      transition: background .16s, color .16s;
     }
-    .form-tab.active { background: var(--blue); color: white; border-color: var(--blue); }
-    .form-group { margin-bottom: 14px; }
-    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-    .form-group label { display: block; font-size: 12px; font-weight: 600;
-      color: var(--gray-700); margin-bottom: 5px; text-transform: uppercase; letter-spacing: .04em; }
+    .form-tab + .form-tab { border-left: 1px solid var(--line); }
+    .form-tab.active { background: var(--ink); color: var(--paper); }
+    .form-group { margin-bottom: 16px; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .form-group label {
+      display: block; font-size: 11px; font-weight: 600;
+      letter-spacing: .12em; text-transform: uppercase;
+      color: var(--ink-mute); margin-bottom: 6px;
+    }
     .form-group input, .form-group select {
       width: 100%; padding: 11px 14px;
-      border: 1.5px solid var(--gray-200); border-radius: var(--radius-sm);
-      font-size: 14px; color: var(--text); background: var(--white);
-      transition: var(--transition); outline: none; font-family: inherit;
+      border: 1px solid var(--line); background: var(--paper);
+      font-size: 14px; color: var(--ink); font-family: inherit;
+      outline: none; border-radius: 0; appearance: none;
+      transition: border-color .16s;
     }
-    .form-group input:focus, .form-group select:focus {
-      border-color: var(--blue); box-shadow: 0 0 0 3px rgba(37,99,235,.1);
+    .form-group select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' fill='none'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%235C6167' stroke-width='1.4'/%3E%3C/svg%3E");
+      background-repeat: no-repeat; background-position: right 14px center;
     }
+    .form-group input:focus, .form-group select:focus { border-color: var(--oxide); }
     .form-submit {
-      width: 100%; padding: 14px; border-radius: var(--radius-sm);
-      background: var(--blue); color: white;
-      border: none; font-size: 15px; font-weight: 700;
-      cursor: pointer; transition: var(--transition); font-family: inherit;
-      margin-top: 6px;
+      width: 100%; padding: 15px; margin-top: 8px;
+      background: var(--ink); color: var(--paper);
+      border: none; font-size: 14.5px; font-weight: 600; cursor: pointer;
+      transition: background .18s;
     }
-    .form-submit:hover { background: var(--blue-hover); transform: translateY(-1px);
-      box-shadow: 0 4px 20px rgba(37,99,235,.35); }
-    .form-legal { font-size: 11px; color: var(--gray-400); text-align: center; margin-top: 12px; line-height: 1.5; }
+    .form-submit:hover { background: var(--oxide-deep); }
+    .form-legal { font-size: 11.5px; color: var(--ink-faint); text-align: center; margin-top: 14px; line-height: 1.5; }
+    .form-success { display: none; text-align: center; padding: 46px 10px; }
+    .form-success .tick {
+      width: 52px; height: 52px; margin: 0 auto 20px;
+      border: 1px solid var(--ok); border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .form-success h3 { font-family: var(--font-head); font-size: 20px; font-weight: 600; margin-bottom: 8px; }
+    .form-success p { font-size: 14px; color: var(--ink-mute); line-height: 1.65; }
 
-    /* ─── FOOTER ─────────────────────────────────────────────────────── */
-    footer {
-      background: var(--navy-deep);
-      border-top: 1px solid rgba(255,255,255,.08);
-      padding: 60px 0 36px;
-    }
-    .footer-inner {
+    /* ── FOOTER ─────────────────────────────────────────────────────── */
+    footer { background: var(--ink); color: rgba(250,248,244,.55); padding: 64px 0 40px; }
+    .footer-grid {
       display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;
-      gap: 48px; margin-bottom: 48px;
+      gap: 48px; padding-bottom: 48px;
+      border-bottom: 1px solid rgba(250,248,244,.12);
     }
-    .footer-brand .nav-logo { color: white; margin-bottom: 14px; }
-    .footer-brand p { font-size: 13px; color: rgba(255,255,255,.4); line-height: 1.65; max-width: 240px; }
-    .footer-col h4 { font-size: 12px; font-weight: 700; color: rgba(255,255,255,.35);
-      letter-spacing: .08em; text-transform: uppercase; margin-bottom: 16px; }
-    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
-    .footer-col a { font-size: 13px; color: rgba(255,255,255,.5); transition: color 0.18s; }
-    .footer-col a:hover { color: var(--white); }
+    .footer-brand .brand { color: var(--paper); margin-bottom: 16px; }
+    .footer-brand p { font-size: 13px; line-height: 1.7; max-width: 260px; }
+    .footer-brand .brand-ar {
+      font-size: 15px; color: rgba(250,248,244,.75); margin-top: 4px; display: block;
+    }
+    .footer-col h4 {
+      font-size: 11px; font-weight: 600; letter-spacing: .16em; text-transform: uppercase;
+      color: rgba(250,248,244,.4); margin-bottom: 18px;
+    }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 11px; }
+    .footer-col a { font-size: 13.5px; color: rgba(250,248,244,.6); transition: color .16s; }
+    .footer-col a:hover { color: var(--paper); }
     .footer-bottom {
       display: flex; justify-content: space-between; align-items: center;
-      padding-top: 24px; border-top: 1px solid rgba(255,255,255,.08);
-      font-size: 12px; color: rgba(255,255,255,.3);
+      flex-wrap: wrap; gap: 14px; padding-top: 26px;
+      font-size: 12px; color: rgba(250,248,244,.4);
+      font-variant-numeric: tabular-nums;
     }
-    .footer-bottom-links { display: flex; gap: 20px; }
+    .footer-bottom-links { display: flex; gap: 22px; }
+    .footer-bottom-links a:hover { color: var(--paper); }
 
-    /* ─── NOTICE BANNER ──────────────────────────────────────────────── */
-    .notice-banner {
-      background: rgba(37,99,235,.06); border-bottom: 1px solid rgba(37,99,235,.12);
-      text-align: center; padding: 11px 24px;
-      font-size: 13px; color: var(--blue); font-weight: 500;
+    /* ── RESPONSIVE ─────────────────────────────────────────────────── */
+    @media (max-width: 1020px) {
+      .hero-grid { grid-template-columns: 1fr; gap: 56px; }
+      .split, .contact-grid { grid-template-columns: 1fr; gap: 56px; }
+      .gov-wide { grid-template-columns: 1fr; gap: 30px; }
     }
-    .notice-banner strong { font-weight: 700; }
+    @media (max-width: 860px) {
+      .nav-links, .nav-right .btn { display: none; }
+      .nav-burger { display: flex; }
+      .sec { padding: 76px 0; }
+      .hero { padding: 64px 0 76px; }
+      .problem-grid { grid-template-columns: 1fr; }
+      .gov-grid { grid-template-columns: 1fr; }
+      .gov-item:nth-child(odd) { border-right: none; padding-right: 0; }
+      .gov-item:nth-child(even) { padding-left: 0; }
+      .ledger-row { grid-template-columns: 56px 1fr; gap: 8px 18px; }
+      .ledger-desc { grid-column: 2; }
+      .ledger-time { grid-column: 2; text-align: left; margin-top: 4px; }
+      .yd-points { grid-template-columns: 1fr; }
+      .yd-point { border-right: none; border-bottom: 1px solid var(--line-soft); padding: 22px 0; }
+      .yd-point:last-child { border-bottom: none; }
+      .sec-row { grid-template-columns: 1fr; gap: 8px; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+      .form-row { grid-template-columns: 1fr; }
+      .tc-stat { padding: 12px 16px; }
+      .tc-head, .tc-table th, .tc-table td, .tc-foot { padding-left: 16px; padding-right: 16px; }
+      .tc-foot { flex-direction: column; gap: 12px; align-items: flex-start; }
+    }
+    @media (max-width: 560px) {
+      .footer-grid { grid-template-columns: 1fr; }
+      .hero-facts span { border-right: none; display: block; width: 100%; padding: 4px 0; margin: 0; }
+      .lead-form { padding: 26px 22px; }
+    }
 
-    /* ─── SUCCESS MESSAGE ────────────────────────────────────────────── */
-    .form-success {
-      display: none; text-align: center; padding: 40px 20px;
+    /* ── RTL / ARABIC ───────────────────────────────────────────────── */
+    [dir="rtl"] {
+      --font-head: 'IBM Plex Sans Arabic', 'Space Grotesk', sans-serif;
+      --font-body: 'IBM Plex Sans Arabic', 'Inter', sans-serif;
     }
-    .form-success .success-icon {
-      width: 56px; height: 56px; border-radius: 50%;
-      background: rgba(16,185,129,.1); border: 2px solid rgba(16,185,129,.3);
-      display: flex; align-items: center; justify-content: center;
-      margin: 0 auto 16px;
+    /* Arabic must never be letter-spaced */
+    [dir="rtl"] * { letter-spacing: 0 !important; }
+    [dir="rtl"] body { line-height: 1.75; }
+    [dir="rtl"] .hero h1 { line-height: 1.35; }
+    [dir="rtl"] .section-title { line-height: 1.4; }
+    [dir="rtl"] .hero-sub, [dir="rtl"] .section-sub, [dir="rtl"] .yourdata p.lead { line-height: 1.85; }
+    [dir="rtl"] .ledger-num::after { margin-left: 0; margin-right: 12px; }
+    [dir="rtl"] .hero-facts span {
+      padding-right: 0; margin-right: 0; border-right: none;
+      padding-left: 22px; margin-left: 22px; border-left: 1px solid var(--line-soft);
     }
-    .form-success h3 { font-size: 20px; font-weight: 800; color: var(--navy); margin-bottom: 8px; }
-    .form-success p  { font-size: 14px; color: var(--gray-500); line-height: 1.6; }
-
-    /* ─── RESPONSIVE ─────────────────────────────────────────────────── */
-    @media (max-width: 960px) {
-      .hero-inner       { grid-template-columns: 1fr; }
-      .hero-visual      { display: none; }
-      .problem-grid     { grid-template-columns: 1fr; }
-      .steps-grid       { grid-template-columns: repeat(4, 1fr); gap: 20px; }
-      .steps-grid::before { display: none; }
-      .step:nth-child(n+5) { margin-top: 20px; }
-      .features-grid    { grid-template-columns: 1fr; }
-      .flywheel-inner   { grid-template-columns: 1fr; }
-      .stats-grid       { grid-template-columns: repeat(2, 1fr); }
-      .cta-inner        { grid-template-columns: 1fr; }
-      .footer-inner     { grid-template-columns: 1fr 1fr; }
-      .nav-links        { display: none; }
-    }
-    @media (max-width: 600px) {
-      .steps-grid       { grid-template-columns: repeat(2, 1fr); }
-      .stats-grid       { grid-template-columns: 1fr 1fr; }
-      .footer-inner     { grid-template-columns: 1fr; }
-      .form-row         { grid-template-columns: 1fr; }
+    [dir="rtl"] .hero-facts span:last-child { border-left: none; margin-left: 0; padding-left: 0; }
+    [dir="rtl"] .ledger-time { text-align: left; }
+    /* Comparison bars start from the right in RTL */
+    [dir="rtl"] .speed-bar-short { margin-left: auto; }
+    [dir="rtl"] .gov-item { padding: 40px 0 40px 36px; }
+    [dir="rtl"] .gov-item:nth-child(odd) { border-right: none; border-left: 1px solid rgba(250,248,244,.12); padding-left: 44px; padding-right: 0; }
+    [dir="rtl"] .gov-item:nth-child(even) { padding-left: 36px; padding-right: 44px; }
+    [dir="rtl"] .gov-wide { border-left: none !important; padding: 40px 0 8px !important; }
+    /* Product-UI mock-ups stay English, so they stay LTR */
+    [dir="rtl"] .tender-card, [dir="rtl"] .rate-panel, [dir="rtl"] .audit-strip { direction: ltr; }
+    [dir="rtl"] .yd-point { border-right: none; border-left: 1px solid var(--line-soft); }
+    [dir="rtl"] .yd-point:last-child { border-left: none; }
+    [dir="rtl"] .form-tab + .form-tab { border-left: none; border-right: 1px solid var(--line); }
+    [dir="rtl"] .form-group select { background-position: left 14px center; }
+    [dir="rtl"] input[type="email"], [dir="rtl"] input[type="tel"] { direction: ltr; text-align: right; }
+    @media (max-width: 860px) {
+      [dir="rtl"] .gov-item,
+      [dir="rtl"] .gov-item:nth-child(odd),
+      [dir="rtl"] .gov-item:nth-child(even) { border-left: none; padding-left: 0; padding-right: 0; }
+      [dir="rtl"] .yd-point { border-left: none; padding: 22px 0; }
+      [dir="rtl"] .ledger-time { text-align: right; }
     }
   </style>
 </head>
 <body>
 
-<!-- ─── NOTICE ─────────────────────────────────────────────────────── -->
-<div class="notice-banner">
-  <strong>Now in early access</strong> — Join the waitlist. First developers onboarded Q3 2026.
+<!-- ── TOP BAR ─────────────────────────────────────────────────────── -->
+<div class="topbar">
+  <strong data-i18n="topbar.built">Built for the UAE</strong><span class="sep">·</span><span data-i18n="topbar.hosted">Data hosted with governance in mind</span>
 </div>
 
-<!-- ─── NAV ───────────────────────────────────────────────────────── -->
-<nav id="main-nav">
+<!-- ── NAV ─────────────────────────────────────────────────────────── -->
+<header class="site-nav" id="site-nav">
   <div class="container">
     <div class="nav-inner">
-      <a href="#" class="nav-logo">
-        <svg class="nav-logo-icon" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg" fill="none">
-          <rect width="40" height="40" rx="9" fill="#0F2D5E"/>
-          <rect x="9" y="13" width="22" height="3.5" rx="1.5" fill="white"/>
-          <rect x="17.5" y="16.5" width="5" height="11" rx="1.5" fill="white"/>
-          <circle cx="29" cy="12" r="5" fill="#2563EB"/>
-          <path d="M27 12l1.5 1.5L31 10.5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <a href="#top" class="brand" aria-label="Tenderbox home">
+        <svg class="brand-mark" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" fill="none" aria-hidden="true">
+          <rect x="1" y="1" width="30" height="30" stroke="#101418" stroke-width="2"/>
+          <rect x="8" y="10" width="16" height="3" fill="#101418"/>
+          <rect x="14" y="13" width="4" height="9" fill="#101418"/>
+          <rect x="22" y="22" width="6" height="6" fill="#B0611A"/>
         </svg>
         Tenderbox
       </a>
-      <ul class="nav-links">
-        <li><a href="#how-it-works">How it Works</a></li>
-        <li><a href="#features">Features</a></li>
-        <li><a href="#data-flywheel">Data Platform</a></li>
-        <li><a href="#contact">Contractors</a></li>
-      </ul>
-      <div class="nav-cta">
-        <a href="#contact" class="btn btn-outline">Join Contractor DB</a>
-        <a href="#contact" class="btn btn-primary">Request Demo</a>
+      <nav aria-label="Primary">
+        <ul class="nav-links">
+          <li><a href="#how-it-works" data-i18n="nav.how">How it Works</a></li>
+          <li><a href="#governance" data-i18n="nav.gov">Governance</a></li>
+          <li><a href="#analysis" data-i18n="nav.analysis">Analysis</a></li>
+          <li><a href="#security" data-i18n="nav.security">Security</a></li>
+          <li><a href="#contact" data-i18n="nav.contact">Contact</a></li>
+        </ul>
+      </nav>
+      <div class="nav-right">
+        <button type="button" class="lang-toggle" id="lang-toggle" aria-label="Switch language / تبديل اللغة"><span class="active" id="lang-en">EN</span><span aria-hidden="true">|</span><span class="ar" id="lang-ar" lang="ar">العربية</span></button>
+        <a href="#contact" class="btn btn-ink" data-i18n="nav.demo">Request a Demo</a>
+        <button class="nav-burger" id="nav-burger" aria-label="Open menu" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
       </div>
     </div>
   </div>
-</nav>
+  <div class="mobile-menu" id="mobile-menu">
+    <a href="#how-it-works" data-i18n="nav.how">How it Works</a>
+    <a href="#governance" data-i18n="nav.gov">Governance</a>
+    <a href="#analysis" data-i18n="nav.analysis">Analysis</a>
+    <a href="#security" data-i18n="nav.security">Security</a>
+    <a href="#contact" data-i18n="nav.contact">Contact</a>
+    <a href="#contact" style="color:var(--oxide-deep);font-weight:600;" data-i18n="nav.demo">Request a Demo</a>
+  </div>
+</header>
 
-<!-- ─── HERO ──────────────────────────────────────────────────────── -->
-<section class="hero">
+<!-- ── HERO ────────────────────────────────────────────────────────── -->
+<section class="hero" id="top">
   <div class="container">
-    <div class="hero-inner">
-      <div class="hero-content">
-        <div class="hero-eyebrow">
-          <span class="tag">Built for UAE Construction</span>
-        </div>
-        <h1 class="hero-title">
-          Tendering in<br>
-          <span>hours,</span><br>
-          not weeks.
-        </h1>
-        <p class="hero-sub">
-          Tenderbox replaces the email chaos, manual BOQ re-entry, and gut-feel analysis of construction tendering with a sealed, governed, AI-powered platform — from invitation to award pack.
+    <div class="hero-grid">
+      <div>
+        <span class="kicker" data-i18n="hero.kicker">Construction Tendering, Governed</span>
+        <h1 data-i18n="hero.title">Tendering in hours, <em>not weeks.</em> Governed at every step.</h1>
+        <p class="hero-sub" data-i18n="hero.sub">
+          Tenderbox runs the full tender cycle for UAE developers and QS practices: sealed submissions, controlled opening, instant commercial analysis. It closes with an award pack your board can sign.
         </p>
         <div class="hero-actions">
-          <a href="#contact" class="btn btn-primary" style="padding:14px 28px;font-size:16px;">
-            Request a Demo
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </a>
-          <a href="#contact" class="btn btn-outline" style="padding:14px 28px;font-size:16px;">Join Contractor Database</a>
+          <a href="#contact" class="btn btn-ink" data-i18n="nav.demo">Request a Demo</a>
+          <a href="#governance" class="btn btn-line" data-i18n="hero.cta2">See the Governance Model</a>
         </div>
-        <div class="hero-trust">
-          <span>Sealed bids</span>
-          <div class="hero-trust-sep"></div>
-          <span>AI analysis</span>
-          <div class="hero-trust-sep"></div>
-          <span>Immutable audit trail</span>
-          <div class="hero-trust-sep"></div>
-          <span>Award-ready exports</span>
+        <div class="hero-facts">
+          <span data-i18n="hero.fact1">Sealed bids</span>
+          <span data-i18n="hero.fact2">Dual-approval opening</span>
+          <span data-i18n="hero.fact3">Immutable audit trail</span>
+          <span data-i18n="hero.fact4">Award-ready exports</span>
         </div>
       </div>
 
-      <div class="hero-visual">
-        <div class="mockup-window">
-          <div class="mockup-bar">
-            <div class="mockup-dot"></div>
-            <div class="mockup-dot"></div>
-            <div class="mockup-dot"></div>
-            <div class="mockup-url">app.tenderbox.ae · Tender Analysis</div>
+      <div>
+        <div class="tender-card" aria-label="Example tender analysis screen">
+          <div class="tc-head">
+            <div>
+              <div class="tc-title">Marina Views · Main Works Package</div>
+              <div class="tc-meta num">Opened 09:00 · 4 contractors · Analysis complete</div>
+            </div>
+            <span class="tc-state">Opened</span>
           </div>
-          <div class="mockup-body">
-            <div class="mockup-header">
-              <div>
-                <div class="mockup-title-text">Marina Views — Main Works Package</div>
-                <div style="font-size:11px;color:#94A3B8;margin-top:2px;">Opened 09:00 · 4 contractors · AI analysis complete</div>
-              </div>
-              <span class="mockup-badge">✓ Opened</span>
+          <div class="tc-stats">
+            <div class="tc-stat"><b class="num">4</b><i>Bids received</i></div>
+            <div class="tc-stat"><b class="num">12%</b><i>Spread, low–high</i></div>
+            <div class="tc-stat"><b class="num">3</b><i>Items flagged</i></div>
+          </div>
+          <table class="tc-table">
+            <thead>
+              <tr>
+                <th>Contractor</th>
+                <th class="r">Total (AED)</th>
+                <th class="r">vs Budget</th>
+                <th class="r">Position</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="tc-lead">
+                <td><strong>Meridian Contracting LLC</strong></td>
+                <td class="r tc-low">18,240,000</td>
+                <td class="r tc-low">−4.1%</td>
+                <td class="r"><span class="tc-tag low">Lowest</span></td>
+              </tr>
+              <tr>
+                <td>Crescent Gulf Engineering</td>
+                <td class="r">19,100,000</td>
+                <td class="r">+0.4%</td>
+                <td class="r">—</td>
+              </tr>
+              <tr>
+                <td>Stonebridge Build Co.</td>
+                <td class="r">19,640,000</td>
+                <td class="r">+3.2%</td>
+                <td class="r"><span class="tc-tag rev">Review</span></td>
+              </tr>
+              <tr>
+                <td>Atlas Construction Group</td>
+                <td class="r tc-high">20,450,000</td>
+                <td class="r tc-high">+7.6%</td>
+                <td class="r"><span class="tc-tag high">Highest</span></td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="tc-foot">
+            <div class="tc-actions">
+              <span>Download Award Pack</span>
+              <span>Negotiation Schedules</span>
             </div>
-            <div class="mockup-stats">
-              <div class="mockup-stat">
-                <div class="mockup-stat-val">4</div>
-                <div class="mockup-stat-lbl">Bids received</div>
-              </div>
-              <div class="mockup-stat">
-                <div class="mockup-stat-val" style="color:#0D9488;">12%</div>
-                <div class="mockup-stat-lbl">Spread (low–high)</div>
-              </div>
-              <div class="mockup-stat">
-                <div class="mockup-stat-val" style="color:#F59E0B;">3</div>
-                <div class="mockup-stat-lbl">Risk flags</div>
-              </div>
-            </div>
-            <table class="mockup-table">
-              <thead>
-                <tr>
-                  <th>Contractor</th>
-                  <th>Total (AED)</th>
-                  <th>vs Budget</th>
-                  <th>Status</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr class="mockup-row-highlight">
-                  <td><strong>Al Futtaim Eng.</strong></td>
-                  <td class="low">18,240,000</td>
-                  <td class="low">−4.1%</td>
-                  <td><span class="mockup-flag flag-low">Lowest</span></td>
-                </tr>
-                <tr>
-                  <td>Arabtec Build Co.</td>
-                  <td class="mid">19,100,000</td>
-                  <td class="mid">+0.4%</td>
-                  <td>—</td>
-                </tr>
-                <tr>
-                  <td>Drake & Scull</td>
-                  <td class="mid">19,640,000</td>
-                  <td class="mid">+3.2%</td>
-                  <td><span class="mockup-flag flag-risk">Review</span></td>
-                </tr>
-                <tr>
-                  <td>ALEC Engineering</td>
-                  <td class="high">20,450,000</td>
-                  <td class="high">+7.6%</td>
-                  <td><span class="mockup-flag flag-high">Highest</span></td>
-                </tr>
-              </tbody>
-            </table>
-            <div class="mockup-footer">
-              <div class="mockup-btn-sm mockup-btn-blue">Download Award Pack</div>
-              <div class="mockup-btn-sm mockup-btn-gray">Negotiation Schedules</div>
-            </div>
+            <span data-i18n="tc.caption">Illustrative data</span>
           </div>
         </div>
       </div>
@@ -765,316 +734,363 @@
   </div>
 </section>
 
-<!-- ─── PROBLEM ────────────────────────────────────────────────────── -->
-<section class="section-problem">
+<!-- ── PROBLEM ─────────────────────────────────────────────────────── -->
+<section class="sec sec-warm">
   <div class="container">
-    <div class="problem-head fade-up">
-      <span class="tag" style="background:rgba(220,38,38,.07);color:#DC2626;border-color:rgba(220,38,38,.15);">The Problem</span>
-      <h2 class="section-title" style="margin-top:14px;">The way tendering works today<br>is costing you money.</h2>
-      <p class="section-sub">Manual, email-based, gut-feel — every tender cycle wastes weeks and leaves value on the table.</p>
+    <div class="sec-head reveal">
+      <span class="kicker" data-i18n="prob.kicker">The Current State</span>
+      <h2 class="section-title" style="margin-top:22px;" data-i18n="prob.title">Once bids are opened,<br>the process leaves your control.</h2>
+      <p class="section-sub" data-i18n="prob.sub">Tendering is a fiduciary process. Yet the moment returns are unsealed, most firms hand the numbers to outsiders, wait months for answers, and hope the record holds up. Four structural weaknesses, each one a cost, a delay, or a governance exposure.</p>
     </div>
     <div class="problem-grid">
-      <div class="problem-card fade-up fade-up-delay-1">
-        <div class="problem-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="#DC2626" stroke-width="2" stroke-linecap="round">
-            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
-          </svg>
-        </div>
-        <h3>BOQs re-entered by hand, every time</h3>
-        <p>Contractors copy rates into spreadsheets. Your QS copies them again. Each re-entry introduces errors, gaps, and version control chaos before a single number is compared.</p>
-        <span class="problem-stat">↑ Re-entry errors in every manual tender</span>
+      <div class="problem-cell reveal rd-1">
+        <span class="p-index">01</span>
+        <h3 data-i18n="prob1.h">Third parties</h3>
+        <p data-i18n="prob1.p">Opened bids are passed to external consultants and suppliers for analysis. Their existing relationships with the bidders are invisible to you, and once the numbers leave the building you cannot control where they travel.</p>
       </div>
-      <div class="problem-card fade-up fade-up-delay-2">
-        <div class="problem-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="#DC2626" stroke-width="2" stroke-linecap="round">
-            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
-            <polyline points="22,6 12,13 2,6"/>
-          </svg>
-        </div>
-        <h3>Submissions by email — no control, no audit</h3>
-        <p>Bids arrive in inboxes. Deadlines are disputed. Bids get seen before opening. There's no sealed process, no immutable record, and no defensible audit trail if challenged.</p>
-        <span class="problem-stat">Zero auditability in standard email tendering</span>
+      <div class="problem-cell reveal rd-2">
+        <span class="p-index">02</span>
+        <h3 data-i18n="prob2.h">Audit exposure</h3>
+        <p data-i18n="prob2.p">Analysing bids in-house raises its own questions: no separation of duties, no independent record of who saw what, and when. Either route leaves the award open to challenge.</p>
       </div>
-      <div class="problem-card fade-up fade-up-delay-3">
-        <div class="problem-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="#DC2626" stroke-width="2" stroke-linecap="round">
-            <circle cx="12" cy="12" r="10"/>
-            <polyline points="12 6 12 12 16 14"/>
-          </svg>
-        </div>
-        <h3>4–6 week cycles delay every decision</h3>
-        <p>Chasing submissions, issuing addenda, waiting on late returners — the tender cycle stretches to six weeks. Decisions slip, programmes shift, and costs rise before a spade hits the ground.</p>
-        <span class="problem-stat">4–6 weeks average tender cycle in UAE</span>
+      <div class="problem-cell reveal rd-3">
+        <span class="p-index">03</span>
+        <h3 data-i18n="prob3.h">Time</h3>
+        <p data-i18n="prob3.p">After a three to four month tender period, analysis, negotiation and resubmission add another fourteen weeks before a recommendation is signed. Programme cost accrues the whole time.</p>
       </div>
-      <div class="problem-card fade-up fade-up-delay-4">
-        <div class="problem-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="#DC2626" stroke-width="2" stroke-linecap="round">
-            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
-          </svg>
-        </div>
-        <h3>Analysis by gut feel, not data</h3>
-        <p>Rate comparisons are done manually — eyeballing a spreadsheet. There's no systematic outlier detection, no normalisation, no historical benchmarks. Negotiation leaves money on the table.</p>
-        <span class="problem-stat">Millions in undetected rate outliers per project</span>
+      <div class="problem-cell reveal rd-4">
+        <span class="p-index">04</span>
+        <h3 data-i18n="prob4.h">Cost</h3>
+        <p data-i18n="prob4.p">Rate outliers and missing items go undetected in spreadsheets. Value is left on the table in every negotiation, and no one can say how much.</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ─── HOW IT WORKS ───────────────────────────────────────────────── -->
-<section class="section-how" id="how-it-works">
+<!-- ── HOW IT WORKS ────────────────────────────────────────────────── -->
+<section class="sec" id="how-it-works">
   <div class="container">
-    <div class="how-head fade-up">
-      <span class="tag">How It Works</span>
-      <h2 class="section-title" style="margin-top:14px;">Seven steps from invitation<br>to award — in hours.</h2>
-      <p class="section-sub">Tenderbox guides every stakeholder through a governed, auditable process — without complexity.</p>
+    <div class="sec-head reveal">
+      <span class="kicker" data-i18n="how.kicker">How It Works</span>
+      <h2 class="section-title" style="margin-top:22px;" data-i18n="how.title">Seven steps, one ledger.<br>Invitation to award.</h2>
+      <p class="section-sub" data-i18n="how.sub">Every step is timestamped, role-controlled, and recorded. The process reads the way it runs: in order.</p>
     </div>
-    <div class="steps-grid">
-      <div class="step fade-up fade-up-delay-1">
-        <div class="step-num">1</div>
-        <div class="step-title">Create Tender</div>
-        <div class="step-desc">Project details, packages, budget, timeline — in under 5 minutes.</div>
-        <span class="step-time">Under 5 mins</span>
+    <div class="ledger reveal">
+      <div class="ledger-row">
+        <span class="ledger-num">01</span>
+        <span class="ledger-title" data-i18n="s1.t">Create Tender</span>
+        <span class="ledger-desc" data-i18n="s1.d">Project details, packages, budget, and timeline, structured from the start. No template wrangling.</span>
+        <span class="ledger-time" data-i18n="s1.time">Under 10 min</span>
       </div>
-      <div class="step fade-up fade-up-delay-2">
-        <div class="step-num">2</div>
-        <div class="step-title">Select Contractors</div>
-        <div class="step-desc">From your pre-qualified, graded contractor database.</div>
-        <span class="step-time">Under 2 mins</span>
+      <div class="ledger-row">
+        <span class="ledger-num">02</span>
+        <span class="ledger-title" data-i18n="s2.t">Select Contractors</span>
+        <span class="ledger-desc" data-i18n="s2.d">Invite from your pre-qualified contractor database, graded by discipline, region, and tier.</span>
+        <span class="ledger-time" data-i18n="s2.time">Minutes</span>
       </div>
-      <div class="step fade-up fade-up-delay-3">
-        <div class="step-num">3</div>
-        <div class="step-title">Sealed Submissions</div>
-        <div class="step-desc">Bids locked on receipt. No early access. Tamper-evident.</div>
-        <span class="step-time">Live throughout</span>
+      <div class="ledger-row">
+        <span class="ledger-num">03</span>
+        <span class="ledger-title" data-i18n="s3.t">Sealed Submissions</span>
+        <span class="ledger-desc" data-i18n="s3.d">Bids are sealed on receipt at database level. No user or role can view a return before opening.</span>
+        <span class="ledger-time" data-i18n="s3.time">Bid period</span>
       </div>
-      <div class="step fade-up fade-up-delay-4">
-        <div class="step-num">4</div>
-        <div class="step-title">Controlled Opening</div>
-        <div class="step-desc">Time-locked opening with dual approval. Auto-generated minutes.</div>
-        <span class="step-time">Under 10 mins</span>
+      <div class="ledger-row">
+        <span class="ledger-num">04</span>
+        <span class="ledger-title" data-i18n="s4.t">Controlled Opening</span>
+        <span class="ledger-desc" data-i18n="s4.d">Time-locked opening requiring two named approvers. Minutes of opening generated automatically.</span>
+        <span class="ledger-time" data-i18n="s4.time">At deadline</span>
       </div>
-      <div class="step fade-up fade-up-delay-5">
-        <div class="step-num">5</div>
-        <div class="step-title">AI Analysis</div>
-        <div class="step-desc">BOQs parsed, normalised, aligned, and analysed across all returns.</div>
-        <span class="step-time">Under 30 mins</span>
+      <div class="ledger-row">
+        <span class="ledger-num">05</span>
+        <span class="ledger-title" data-i18n="s5.t">Commercial Analysis</span>
+        <span class="ledger-desc" data-i18n="s5.d">Every BOQ parsed, aligned, and compared across returns, with rate outliers flagged for review.</span>
+        <span class="ledger-time" data-i18n="s5.time">Under 1 hour</span>
       </div>
-      <div class="step fade-up fade-up-delay-6">
-        <div class="step-num">6</div>
-        <div class="step-title">Negotiation Schedules</div>
-        <div class="step-desc">Per-contractor schedules highlighting outliers and savings opportunities.</div>
-        <span class="step-time">Under 1 hour</span>
+      <div class="ledger-row">
+        <span class="ledger-num">06</span>
+        <span class="ledger-title" data-i18n="s6.t">Negotiation Schedules</span>
+        <span class="ledger-desc" data-i18n="s6.d">Per-contractor schedules identifying where each return sits against the field, item by item.</span>
+        <span class="ledger-time" data-i18n="s6.time">Same day</span>
       </div>
-      <div class="step fade-up">
-        <div class="step-num">7</div>
-        <div class="step-title">Award Pack</div>
-        <div class="step-desc">One-click export: minutes, analysis, schedules, audit bundle.</div>
-        <span class="step-time">One click</span>
+      <div class="ledger-row">
+        <span class="ledger-num">07</span>
+        <span class="ledger-title" data-i18n="s7.t">Award Pack</span>
+        <span class="ledger-desc" data-i18n="s7.d">Minutes, analysis, schedules, and the full audit bundle. Exported in one action, ready for the board.</span>
+        <span class="ledger-time" data-i18n="s7.time">One click</span>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ─── FEATURES ──────────────────────────────────────────────────── -->
-<section class="section-features" id="features">
+<!-- ── SPEED ───────────────────────────────────────────────────────── -->
+<section class="sec sec-warm" id="speed">
   <div class="container">
-    <div class="features-head fade-up">
-      <span class="tag" style="background:rgba(255,255,255,.08);color:rgba(255,255,255,.8);border-color:rgba(255,255,255,.15);">Platform Features</span>
-      <h2 class="section-title" style="margin-top:14px;">Everything your QS team needs.<br>Nothing they don't.</h2>
-      <p class="section-sub">Built around the workflows of developer-side QS practice — not a generic procurement tool.</p>
+    <div class="sec-head reveal">
+      <span class="kicker" data-i18n="speed.kicker">Time Reclaimed</span>
+      <h2 class="section-title" style="margin-top:22px;" data-i18n="speed.title">Fourteen weeks after opening.<br>Or on opening day.</h2>
+      <p class="section-sub" data-i18n="speed.sub">Analysis runs in the background the moment bids unseal. Full tender analysis and negotiation schedules are ready before the committee leaves the room, and resubmission comparisons re-run in minutes, not weeks.</p>
     </div>
-    <div class="features-grid">
-      <div class="feature-card fade-up fade-up-delay-1">
-        <div class="feature-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
-            <circle cx="9" cy="7" r="4"/>
-            <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
-            <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
-          </svg>
+    <div class="speed-bars reveal rd-1">
+      <div>
+        <span class="speed-bar-label" data-i18n="speed.manual">The manual route</span>
+        <div class="speed-bar speed-bar-long"></div>
+        <span class="speed-bar-cap num" data-i18n="speed.manualCap">14 weeks: consultant analysis, negotiation, resubmission</span>
+      </div>
+      <div>
+        <span class="speed-bar-label">Tenderbox</span>
+        <div class="speed-bar speed-bar-short"></div>
+        <span class="speed-bar-cap num" data-i18n="speed.dayCap">1 day</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── GOVERNANCE ──────────────────────────────────────────────────── -->
+<section class="sec sec-ink" id="governance">
+  <div class="container">
+    <div class="sec-head reveal">
+      <span class="kicker" data-i18n="gov.kicker">Governance</span>
+      <h2 class="section-title" style="margin-top:22px;" data-i18n="gov.title">A tender process you can<br>defend, line by line.</h2>
+      <p class="section-sub" data-i18n="gov.sub">Tenderbox is built so that probity is a property of the system, not a promise from the people running it.</p>
+    </div>
+    <div class="gov-grid">
+      <div class="gov-item reveal rd-1">
+        <span class="gov-label" data-i18n="g1.l">Sealed Bids</span>
+        <h3 data-i18n="g1.h">Sealed at database level</h3>
+        <p data-i18n="g1.p">Submissions are encrypted and locked the moment they arrive. Not restricted by permissions: structurally unreadable until the opening event. There is no administrator override.</p>
+      </div>
+      <div class="gov-item reveal rd-2">
+        <span class="gov-label" data-i18n="g2.l">Controlled Opening</span>
+        <h3 data-i18n="g2.h">Dual-approval opening</h3>
+        <p data-i18n="g2.p">Opening a tender requires two named approvers acting after the deadline: the digital equivalent of two keyholders at the box. The event, its approvers, and its exact time are recorded automatically.</p>
+      </div>
+      <div class="gov-item reveal rd-3">
+        <span class="gov-label" data-i18n="g3.l">Audit Trail</span>
+        <h3 data-i18n="g3.h">Append-only, hash-chained record</h3>
+        <p data-i18n="g3.p">Invitations, submissions, addenda, openings, downloads: every action is written to an append-only log, each entry chained to the last. Amendments are additions; nothing is ever rewritten.</p>
+      </div>
+      <div class="gov-item reveal rd-4">
+        <span class="gov-label" data-i18n="g4.l">Separation of Duties</span>
+        <h3 data-i18n="g4.h">Roles that cannot collide</h3>
+        <p data-i18n="g4.p">The person who creates a tender, the people who approve its opening, and the people who analyse returns hold distinct roles with distinct permissions, enforced by the platform, not by policy documents.</p>
+      </div>
+      <div class="gov-item gov-wide reveal">
+        <div>
+          <span class="gov-label" data-i18n="g5.l">Evidence on Demand</span>
+          <h3 data-i18n="g5.h">The full record, exportable</h3>
+          <p data-i18n="g5.p">Any tender's complete audit bundle exports as a single package: every event, hash, approver, and timestamp. If an award is questioned, the answer takes minutes, not a forensic exercise.</p>
         </div>
-        <h3>Contractor Database</h3>
-        <p>Build a pre-qualified pool of contractors — graded, tagged by discipline and region, ready to invite in seconds.</p>
-        <ul class="feature-list">
-          <li>EOI / PQQ-lite onboarding flow</li>
-          <li>Contractor grades A / B / C per discipline</li>
-          <li>Compliance documents and certifications</li>
-          <li>Searchable by region, trade, and tier</li>
+        <div>
+          <div class="audit-strip" role="img" aria-label="Example audit trail entries">
+            <div class="ar-row"><span class="ar-t num">09:00:00</span><span>Opening approved: two approvers verified</span><span class="ar-h">a41f…9c02</span></div>
+            <div class="ar-row"><span class="ar-t num">09:00:04</span><span>Four sealed submissions unsealed</span><span class="ar-h">7be3…d514</span></div>
+            <div class="ar-row"><span class="ar-t num">09:00:05</span><span>Minutes of opening generated</span><span class="ar-h">c9a8…22f7</span></div>
+            <div class="ar-row"><span class="ar-t num">09:47:12</span><span>Commercial analysis complete: 3 items flagged</span><span class="ar-h">e01d…6b39</span></div>
+          </div>
+          <div class="audit-cap num" data-i18n="audit.cap">Illustrative audit entries · Each record chained to the previous</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── ANALYSIS ────────────────────────────────────────────────────── -->
+<section class="sec" id="analysis">
+  <div class="container">
+    <div class="split">
+      <div class="reveal">
+        <span class="kicker" data-i18n="an.kicker">Commercial Analysis</span>
+        <h2 class="section-title" style="margin-top:22px;" data-i18n="an.title">Your QS team, augmented.</h2>
+        <p class="section-sub" data-i18n="an.sub">The analysis a strong QS team would produce over a fortnight, drafted in under an hour. Every figure traceable, every flag reviewable, every judgement still theirs.</p>
+        <ul class="analysis-points">
+          <li>
+            <span class="ap-mark">A</span>
+            <div>
+              <h4 data-i18n="ap1.h">BOQ parsing and alignment</h4>
+              <p data-i18n="ap1.p">Multi-sheet bills parsed as submitted, real-world formatting included, then aligned item-for-item across all returns. No re-entry, no transcription errors.</p>
+            </div>
+          </li>
+          <li>
+            <span class="ap-mark">B</span>
+            <div>
+              <h4 data-i18n="ap2.h">Outlier detection</h4>
+              <p data-i18n="ap2.p">Rates that sit outside the field are flagged with their spread and context, so review effort goes where the money is.</p>
+            </div>
+          </li>
+          <li>
+            <span class="ap-mark">C</span>
+            <div>
+              <h4 data-i18n="ap3.h">Negotiation schedules</h4>
+              <p data-i18n="ap3.p">Per-contractor schedules showing exactly which items to challenge and by how much: the working document for the clarification meeting.</p>
+            </div>
+          </li>
+          <li>
+            <span class="ap-mark">D</span>
+            <div>
+              <h4 data-i18n="ap4.h">Award-ready exports</h4>
+              <p data-i18n="ap4.p">Comparison tables, schedules, and minutes in Excel and PDF, formatted for the recommendation report, not for rework.</p>
+            </div>
+          </li>
         </ul>
       </div>
-      <div class="feature-card fade-up fade-up-delay-2">
-        <div class="feature-icon teal">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
-            <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
-          </svg>
+      <div class="reveal rd-2">
+        <div class="rate-panel" aria-label="Example rate comparison panel">
+          <div class="rp-head"><b>Item 3.2.14 · Blockwork, 200mm</b><i>Rate / m²</i></div>
+          <div class="rp-row">
+            <span>Meridian Contracting LLC</span>
+            <span class="r num">78.50</span>
+            <span class="r num">−6%</span>
+            <div class="rp-bar"><i style="left:8%;width:30%;"></i></div>
+          </div>
+          <div class="rp-row">
+            <span>Crescent Gulf Engineering</span>
+            <span class="r num">83.00</span>
+            <span class="r num">−1%</span>
+            <div class="rp-bar"><i style="left:8%;width:42%;"></i></div>
+          </div>
+          <div class="rp-row">
+            <span>Stonebridge Build Co.</span>
+            <span class="r num">84.25</span>
+            <span class="r num">+1%</span>
+            <div class="rp-bar"><i style="left:8%;width:46%;"></i></div>
+          </div>
+          <div class="rp-row">
+            <span>Atlas Construction Group <span class="flag">· flagged</span></span>
+            <span class="r num flag">112.00</span>
+            <span class="r num flag">+34%</span>
+            <div class="rp-bar"><i style="left:8%;width:84%;background:var(--oxide-deep);"></i></div>
+          </div>
+          <div class="rp-cap num" data-i18n="rate.cap">Illustrative data · Field median 83.63 AED/m²</div>
         </div>
-        <h3>Sealed Bid Governance</h3>
-        <p>Cryptographically sealed submissions. Dual-approval opening. Immutable audit log from invitation to award.</p>
-        <ul class="feature-list">
-          <li>Bids locked until exact opening date/time</li>
-          <li>No early access for any user or role</li>
-          <li>Auto-generated minutes of opening</li>
-          <li>Immutable, timestamped audit trail</li>
-          <li>Full separation of duties by role</li>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── YOUR DATA ───────────────────────────────────────────────────── -->
+<section class="sec sec-warm yourdata" id="your-data">
+  <div class="container">
+    <div class="inner reveal">
+      <span class="kicker" data-i18n="yd.kicker">Your Data</span>
+      <h2 class="section-title" data-i18n="yd.title">Your data stays yours.</h2>
+      <p class="lead" data-i18n="yd.lead">Every tender you run builds your own private rate library: structured, searchable, and visible only to your team. It is never shared, pooled, or sold. Over time it becomes the benchmark you price your next cost plan against.</p>
+      <div class="yd-points">
+        <div class="yd-point reveal rd-1">
+          <h4 data-i18n="yd1.h">Private by design</h4>
+          <p data-i18n="yd1.p">Your rates, your tenders, your records: accessible to your organisation and no one else.</p>
+        </div>
+        <div class="yd-point reveal rd-2">
+          <h4 data-i18n="yd2.h">Built from your own tenders</h4>
+          <p data-i18n="yd2.p">Each completed tender adds cleanly structured rates to your library automatically. No separate data entry.</p>
+        </div>
+        <div class="yd-point reveal rd-3">
+          <h4 data-i18n="yd3.h">Your benchmark, compounding</h4>
+          <p data-i18n="yd3.p">Historic rates by trade, region, and package: the most accurate reference your estimators will ever have.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── SECURITY ────────────────────────────────────────────────────── -->
+<section class="sec" id="security">
+  <div class="container">
+    <div class="sec-head reveal">
+      <span class="kicker" data-i18n="sec.kicker">Security</span>
+      <h2 class="section-title" style="margin-top:22px;" data-i18n="sec.title">Built to institutional expectations.</h2>
+      <p class="section-sub" data-i18n="sec.sub">Short answers to the questions your IT and audit teams will ask first.</p>
+    </div>
+    <dl class="sec-table reveal">
+      <div class="sec-row">
+        <dt data-i18n="sr1.t">Hosting</dt>
+        <dd data-i18n="sr1.d">Cloud infrastructure selected with regional data governance in mind. Data residency requirements are addressed per client engagement.</dd>
+      </div>
+      <div class="sec-row">
+        <dt data-i18n="sr2.t">Encryption</dt>
+        <dd data-i18n="sr2.d">All data encrypted in transit (TLS 1.2+) and at rest (AES-256). Sealed submissions carry an additional encryption layer released only at the opening event.</dd>
+      </div>
+      <div class="sec-row">
+        <dt data-i18n="sr3.t">Access Control</dt>
+        <dd data-i18n="sr3.d">Role-based access with least-privilege defaults, enforced separation of duties, and multi-factor authentication for approver roles.</dd>
+      </div>
+      <div class="sec-row">
+        <dt data-i18n="sr4.t">Audit</dt>
+        <dd data-i18n="sr4.d">Append-only, hash-chained event log covering every action on every tender. Fully exportable for internal audit or external review.</dd>
+      </div>
+      <div class="sec-row">
+        <dt data-i18n="sr5.t">Assurance</dt>
+        <dd data-i18n="sr5.d">Security programme built on an ISO 27001 alignment roadmap, with independent penetration testing planned each release cycle.</dd>
+      </div>
+    </dl>
+  </div>
+</section>
+
+<!-- ── CONTACT ─────────────────────────────────────────────────────── -->
+<section class="sec sec-warm" id="contact">
+  <div class="container">
+    <div class="contact-grid">
+      <div class="reveal">
+        <span class="kicker" data-i18n="ct.kicker">Contact</span>
+        <h2 class="section-title" style="margin-top:22px;" data-i18n="ct.title">See a tender run end to end.</h2>
+        <p class="section-sub" data-i18n="ct.sub">Tenderbox is in early access for UAE-based developers and QS consultancies. Request a demonstration, or register your contracting firm for the approved database.</p>
+        <ul class="contact-notes">
+          <li data-i18n="ct.n1">No commitment required for demonstration requests</li>
+          <li data-i18n="ct.n2">Contractor registrations reviewed within five business days</li>
+          <li data-i18n="ct.n3">Your details are never shared without explicit consent</li>
+          <li data-i18n="ct.n4">Early access clients receive founding partner terms</li>
         </ul>
       </div>
-      <div class="feature-card fade-up fade-up-delay-3">
-        <div class="feature-icon gold">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
-          </svg>
-        </div>
-        <h3>Commercial Analysis Engine</h3>
-        <p>AI-powered BOQ parsing, normalisation, and comparison across all returns — producing a negotiation schedule a QS can actually use.</p>
-        <ul class="feature-list">
-          <li>Multi-sheet BOQ parsing (handles real-world messiness)</li>
-          <li>Rate outlier detection and flagging</li>
-          <li>Per-item high/low spread analysis</li>
-          <li>Per-contractor negotiation schedules</li>
-          <li>Excel + PDF exports, award-ready</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ─── DATA FLYWHEEL ─────────────────────────────────────────────── -->
-<section class="section-flywheel" id="data-flywheel">
-  <div class="container">
-    <div class="flywheel-inner">
-      <div class="flywheel-diagram fade-up">
-        <div class="flywheel-node phase1">
-          <div class="flywheel-node-head">
-            <span class="flywheel-phase-badge badge-blue">Phase 1</span>
-          </div>
-          <h4>Tenderbox Platform</h4>
-          <p>Every tender run on Tenderbox generates structured, real-world BOQ rate data — normalised, tagged by location, project type, tier, and contractor grade.</p>
-        </div>
-        <div class="flywheel-connector"></div>
-        <div class="flywheel-arrow-label">↓ live rate data flows into</div>
-        <div class="flywheel-connector d2" style="background:linear-gradient(to bottom,var(--gold),var(--gold));"></div>
-        <div class="flywheel-node data">
-          <div class="flywheel-node-head">
-            <span class="flywheel-phase-badge badge-gold">Data Core</span>
-          </div>
-          <h4>Normalized Rate Database</h4>
-          <p>BOQ items mapped to a standard taxonomy. Confidence-scored by recency, volume, and consistency. Continuously refined. Anonymized and aggregated for safe use.</p>
-        </div>
-        <div class="flywheel-connector d2"></div>
-        <div class="flywheel-arrow-label">↓ powers</div>
-        <div class="flywheel-connector" style="background:var(--teal);"></div>
-        <div class="flywheel-node phase2">
-          <div class="flywheel-node-head">
-            <span class="flywheel-phase-badge badge-teal">Phase 2</span>
-          </div>
-          <h4>Feasibility AI</h4>
-          <p>Upload an affection plan. Answer a few questions. Receive a consultant-grade feasibility study — cost plan, revenue model, IRR, max land price — in minutes.</p>
-        </div>
-      </div>
-      <div class="flywheel-text fade-up fade-up-delay-2">
-        <span class="tag tag-teal" style="margin-bottom:20px;">The Data Moat</span>
-        <h2>Every tender makes the next one smarter.</h2>
-        <p>Most tendering software is a workflow tool. Tenderbox is a data flywheel. Every BOQ submitted through the platform enriches a proprietary database of real, live construction costs — the kind no consultant has access to today.</p>
-        <p>That dataset is the foundation for Phase 2: an AI that turns an affection plan into a full feasibility study in minutes, not weeks.</p>
-        <div class="flywheel-insight">
-          <p><span>The Tenderbox insight:</span> The construction industry has rich cost data locked inside thousands of tender responses, never systematically captured. We're building the infrastructure to unlock it — and the AI product to monetise it.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ─── STATS ──────────────────────────────────────────────────────── -->
-<section class="section-stats">
-  <div class="container">
-    <div class="stats-grid">
-      <div class="stat-item fade-up">
-        <div class="stat-val"><span>4–6</span> weeks</div>
-        <div class="stat-lbl">Average manual tender cycle<br>that Tenderbox replaces with hours</div>
-      </div>
-      <div class="stat-item fade-up fade-up-delay-1">
-        <div class="stat-val">$<span>15</span>B+</div>
-        <div class="stat-lbl">UAE construction procurement<br>annually — all manually tendered today</div>
-      </div>
-      <div class="stat-item fade-up fade-up-delay-2">
-        <div class="stat-val"><span>7</span> steps</div>
-        <div class="stat-lbl">From invitation to award pack,<br>fully governed and auditable</div>
-      </div>
-      <div class="stat-item fade-up fade-up-delay-3">
-        <div class="stat-val"><span>0</span> re-entry</div>
-        <div class="stat-lbl">Manual BOQ re-entry required —<br>AI parses every return automatically</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ─── CTA / LEAD CAPTURE ────────────────────────────────────────── -->
-<section class="section-cta" id="contact">
-  <div class="container">
-    <div class="cta-inner">
-      <div class="cta-text fade-up">
-        <h2>Be among the first on the platform.</h2>
-        <p>Tenderbox is in early access for UAE-based developers and QS consultants. Join the waitlist or register your contracting firm for the approved database.</p>
-        <div class="cta-trust">
-          <div class="cta-trust-item"><div class="cta-trust-dot"></div>No commitment required for demo requests</div>
-          <div class="cta-trust-item"><div class="cta-trust-dot"></div>Contractor database entries reviewed within 5 business days</div>
-          <div class="cta-trust-item"><div class="cta-trust-dot"></div>Your data is never shared without explicit consent</div>
-          <div class="cta-trust-item"><div class="cta-trust-dot"></div>Early access clients receive founding partner pricing</div>
-        </div>
-      </div>
-      <div class="fade-up fade-up-delay-2">
-        <div class="lead-form" id="lead-form">
-          <div class="form-title">Get in touch</div>
-          <div class="form-sub">Request a demo or register your contracting company.</div>
-          <div class="form-tabs">
-            <button class="form-tab active" onclick="switchTab(this,'developer')">I'm a Developer / QS</button>
-            <button class="form-tab" onclick="switchTab(this,'contractor')">I'm a Contractor</button>
+      <div class="reveal rd-2">
+        <div class="lead-form">
+          <div class="form-title" data-i18n="form.title">Get in touch</div>
+          <div class="form-sub" data-i18n="form.sub">Request a demonstration or register your contracting company.</div>
+          <div class="form-tabs" role="tablist">
+            <button class="form-tab active" role="tab" aria-selected="true" onclick="switchTab(this,'developer')" data-i18n="tab.dev">Developer / QS</button>
+            <button class="form-tab" role="tab" aria-selected="false" onclick="switchTab(this,'contractor')" data-i18n="tab.con">Contractor</button>
           </div>
           <form id="contact-form" onsubmit="handleSubmit(event)">
             <div class="form-row">
               <div class="form-group">
-                <label>First Name</label>
-                <input type="text" placeholder="Ahmed" required>
+                <label for="f-first" data-i18n="f.first">First Name</label>
+                <input id="f-first" type="text" placeholder="Ahmed" data-i18n-placeholder="f.firstPh" required>
               </div>
               <div class="form-group">
-                <label>Last Name</label>
-                <input type="text" placeholder="Al Rashidi" required>
+                <label for="f-last" data-i18n="f.last">Last Name</label>
+                <input id="f-last" type="text" placeholder="Al Rashidi" data-i18n-placeholder="f.lastPh" required>
               </div>
             </div>
             <div class="form-group">
-              <label>Company</label>
-              <input type="text" placeholder="Company name" required>
+              <label for="f-company" data-i18n="f.company">Company</label>
+              <input id="f-company" type="text" placeholder="Company name" data-i18n-placeholder="f.companyPh" required>
             </div>
             <div class="form-group">
-              <label>Work Email</label>
-              <input type="email" placeholder="you@company.ae" required>
+              <label for="f-email" data-i18n="f.email">Work Email</label>
+              <input id="f-email" type="email" placeholder="you@company.ae" required>
             </div>
             <div class="form-group">
-              <label>Phone</label>
-              <input type="tel" placeholder="+971 50 000 0000">
+              <label for="f-phone" data-i18n="f.phone">Phone</label>
+              <input id="f-phone" type="tel" placeholder="+971 50 000 0000">
             </div>
             <div class="form-group" id="interest-group">
-              <label>I'm interested in</label>
-              <select>
+              <label for="f-interest" id="interest-label" data-i18n="f.interest">I'm interested in</label>
+              <select id="f-interest">
                 <option value="">Select one…</option>
                 <option>Tendering platform demo</option>
                 <option>Early access / pilot programme</option>
-                <option>Feasibility AI (Phase 2)</option>
                 <option>Partnership / investment</option>
               </select>
             </div>
-            <button type="submit" class="form-submit">Send Request →</button>
-            <div class="form-legal">By submitting, you agree to be contacted by the Tenderbox team. No spam, ever.</div>
+            <button type="submit" class="form-submit" data-i18n="form.submit">Send Request</button>
+            <div class="form-legal" data-i18n="form.legal">By submitting, you agree to be contacted by the Tenderbox team. No spam, ever.</div>
           </form>
           <div class="form-success" id="form-success">
-            <div class="success-icon">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.5" stroke-linecap="round">
+            <div class="tick">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#3D6B4F" stroke-width="2" stroke-linecap="round" aria-hidden="true">
                 <polyline points="20 6 9 17 4 12"/>
               </svg>
             </div>
-            <h3>Request received!</h3>
-            <p>The Tenderbox team will be in touch within one business day. We look forward to speaking with you.</p>
+            <h3 data-i18n="ok.h">Request received</h3>
+            <p data-i18n="ok.p">The Tenderbox team will be in touch within one business day. We look forward to speaking with you.</p>
           </div>
         </div>
       </div>
@@ -1082,110 +1098,365 @@
   </div>
 </section>
 
-<!-- ─── FOOTER ─────────────────────────────────────────────────────── -->
+<!-- ── FOOTER ──────────────────────────────────────────────────────── -->
 <footer>
   <div class="container">
-    <div class="footer-inner">
+    <div class="footer-grid">
       <div class="footer-brand">
-        <div class="nav-logo" style="margin-bottom:14px;">
-          <svg class="nav-logo-icon" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg" fill="none">
-            <rect width="40" height="40" rx="9" fill="#1B3B6F"/>
-            <rect x="9" y="13" width="22" height="3.5" rx="1.5" fill="white"/>
-            <rect x="17.5" y="16.5" width="5" height="11" rx="1.5" fill="white"/>
-            <circle cx="29" cy="12" r="5" fill="#2563EB"/>
-            <path d="M27 12l1.5 1.5L31 10.5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <div class="brand">
+          <svg class="brand-mark" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" fill="none" aria-hidden="true">
+            <rect x="1" y="1" width="30" height="30" stroke="#FAF8F4" stroke-width="2"/>
+            <rect x="8" y="10" width="16" height="3" fill="#FAF8F4"/>
+            <rect x="14" y="13" width="4" height="9" fill="#FAF8F4"/>
+            <rect x="22" y="22" width="6" height="6" fill="#C77B3B"/>
           </svg>
-          Tenderbox
+          Tenderbox <span class="brand-ar" lang="ar">تندربوكس</span>
         </div>
-        <p>Construction tendering reimagined — sealed, governed, AI-powered. Built for the UAE development market.</p>
+        <p data-i18n="ft.tagline">Sealed, auditable, decision-ready construction tendering. Built for the UAE development market.</p>
       </div>
       <div class="footer-col">
-        <h4>Product</h4>
+        <h4 data-i18n="ft.platform">Platform</h4>
         <ul>
-          <li><a href="#how-it-works">How it Works</a></li>
-          <li><a href="#features">Features</a></li>
-          <li><a href="#data-flywheel">Data Platform</a></li>
-          <li><a href="#contact">Feasibility AI</a></li>
+          <li><a href="#how-it-works" data-i18n="nav.how">How it Works</a></li>
+          <li><a href="#governance" data-i18n="nav.gov">Governance</a></li>
+          <li><a href="#analysis" data-i18n="nav.analysis">Analysis</a></li>
+          <li><a href="#security" data-i18n="nav.security">Security</a></li>
         </ul>
       </div>
       <div class="footer-col">
-        <h4>For</h4>
+        <h4 data-i18n="ft.for">For</h4>
         <ul>
-          <li><a href="#contact">Developers</a></li>
-          <li><a href="#contact">QS Consultants</a></li>
-          <li><a href="#contact">Contractors</a></li>
-          <li><a href="#contact">Project Managers</a></li>
+          <li><a href="#contact" data-i18n="ft.devs">Developers</a></li>
+          <li><a href="#contact" data-i18n="ft.qs">QS Consultants</a></li>
+          <li><a href="#contact" data-i18n="ft.contractors">Contractors</a></li>
+          <li><a href="#contact" data-i18n="ft.govadv">Government Advisors</a></li>
         </ul>
       </div>
       <div class="footer-col">
-        <h4>Company</h4>
+        <h4 data-i18n="ft.company">Company</h4>
         <ul>
-          <li><a href="#contact">About</a></li>
-          <li><a href="#contact">Contact</a></li>
-          <li><a href="/privacy.html">Privacy Policy</a></li>
-          <li><a href="/terms.html">Terms of Use</a></li>
+          <li><a href="#contact" data-i18n="nav.contact">Contact</a></li>
+          <li><a href="mailto:hello@tenderbox.ae">hello@tenderbox.ae</a></li>
+          <li><a href="privacy.html" data-i18n="ft.privacyPolicy">Privacy Policy</a></li>
+          <li><a href="terms.html" data-i18n="ft.termsUse">Terms of Use</a></li>
         </ul>
       </div>
     </div>
     <div class="footer-bottom">
-      <span>© 2026 Tenderbox. All rights reserved. Dubai, UAE.</span>
+      <span data-i18n="ft.copy">© 2026 Tenderbox. All rights reserved. Dubai, UAE.</span>
       <div class="footer-bottom-links">
-        <a href="/privacy.html">Privacy</a>
-        <a href="/terms.html">Terms</a>
+        <a href="privacy.html" data-i18n="ft.privacy">Privacy</a>
+        <a href="terms.html" data-i18n="ft.terms">Terms</a>
         <a href="mailto:hello@tenderbox.ae">hello@tenderbox.ae</a>
       </div>
     </div>
   </div>
 </footer>
 
-<!-- ─── SCRIPTS ────────────────────────────────────────────────────── -->
+<!-- ── SCRIPTS ─────────────────────────────────────────────────────── -->
 <script>
-  // Nav scroll effect
-  const nav = document.getElementById('main-nav');
-  window.addEventListener('scroll', () => {
-    nav.classList.toggle('scrolled', window.scrollY > 20);
+  // Nav hairline on scroll
+  var siteNav = document.getElementById('site-nav');
+  window.addEventListener('scroll', function () {
+    siteNav.classList.toggle('scrolled', window.scrollY > 12);
+  }, { passive: true });
+
+  // Mobile menu
+  var burger = document.getElementById('nav-burger');
+  var mobileMenu = document.getElementById('mobile-menu');
+  burger.addEventListener('click', function () {
+    var open = mobileMenu.classList.toggle('open');
+    burger.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+  mobileMenu.querySelectorAll('a').forEach(function (a) {
+    a.addEventListener('click', function () {
+      mobileMenu.classList.remove('open');
+      burger.setAttribute('aria-expanded', 'false');
+    });
   });
 
-  // Scroll animations
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
-  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+  // Scroll reveal
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -36px 0px' });
+  document.querySelectorAll('.reveal').forEach(function (el) { io.observe(el); });
 
   // Form tabs
   function switchTab(btn, type) {
-    document.querySelectorAll('.form-tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.form-tab').forEach(function (t) {
+      t.classList.remove('active');
+      t.setAttribute('aria-selected', 'false');
+    });
     btn.classList.add('active');
-    const label = document.querySelector('#interest-group label');
-    if (type === 'contractor') {
-      label.textContent = "Contractor type";
-      document.querySelector('#interest-group select').innerHTML = `
-        <option value="">Select one…</option>
-        <option>Main contractor</option>
-        <option>MEP contractor</option>
-        <option>Specialist subcontractor</option>
-        <option>Civil / structure</option>
-        <option>Interior fit-out</option>
-      `;
-    } else {
-      label.textContent = "I'm interested in";
-      document.querySelector('#interest-group select').innerHTML = `
-        <option value="">Select one…</option>
-        <option>Tendering platform demo</option>
-        <option>Early access / pilot programme</option>
-        <option>Feasibility AI (Phase 2)</option>
-        <option>Partnership / investment</option>
-      `;
-    }
+    btn.setAttribute('aria-selected', 'true');
+    currentTab = type;
+    renderInterest();
   }
 
-  // Form submit
+  // Form submit (front-end only)
   function handleSubmit(e) {
     e.preventDefault();
     document.getElementById('contact-form').style.display = 'none';
+    document.querySelector('#contact .form-tabs').style.display = 'none';
     document.getElementById('form-success').style.display = 'block';
-    // In production: send to Supabase or email API here
   }
+
+  // ── i18n: EN / AR ─────────────────────────────────────────────────
+  var translations = {
+    // EN is auto-derived from the markup at load time (see below), so a
+    // round-trip EN → AR → EN restores the original strings exactly.
+    en: {},
+    ar: {
+      "topbar.built": "صُمم لدولة الإمارات",
+      "topbar.hosted": "استضافة البيانات وفق مبادئ الحوكمة",
+      "nav.how": "آلية العمل",
+      "nav.gov": "الحوكمة",
+      "nav.analysis": "التحليل",
+      "nav.security": "الأمن",
+      "nav.contact": "تواصلوا معنا",
+      "nav.demo": "اطلب عرضاً توضيحياً",
+      "hero.kicker": "مناقصات البناء تحت الحوكمة",
+      "hero.title": "مناقصات في ساعات <em>لا أسابيع.</em> حوكمة في كل خطوة.",
+      "hero.sub": "تدير Tenderbox دورة المناقصة كاملة للمطوّرين العقاريين واستشاريي حصر الكميات في دولة الإمارات: عطاءات مغلقة عند التقديم، وفتح مظاريف مُحكم، وتحليل تجاري فوري. وتُختتم الدورة بحزمة ترسية جاهزة لتوقيع مجلس إدارتكم.",
+      "hero.cta2": "اطّلعوا على نموذج الحوكمة",
+      "hero.fact1": "عطاءات مغلقة",
+      "hero.fact2": "فتح المظاريف بموافقة ثنائية",
+      "hero.fact3": "سجل تدقيق غير قابل للتعديل",
+      "hero.fact4": "مستندات جاهزة للترسية",
+      "tc.caption": "بيانات توضيحية",
+      "prob.kicker": "الوضع الراهن",
+      "prob.title": "بمجرد فتح المظاريف،<br>تخرج العملية عن سيطرتكم.",
+      "prob.sub": "المناقصة عملية ائتمانية بطبيعتها. ومع ذلك، فور فتح العطاءات تُسلَّم الأرقام في معظم الشركات إلى أطراف خارجية، ويمتد انتظار النتائج شهوراً، ويبقى الأمل أن يصمد السجل عند التدقيق. أربع نقاط ضعف هيكلية، كل منها تكلفة أو تأخير أو ثغرة في الحوكمة.",
+      "prob1.h": "الأطراف الخارجية",
+      "prob1.p": "تُمرَّر العطاءات بعد فتحها إلى استشاريين ومورّدين خارجيين للتحليل. علاقاتهم القائمة مع مقدّمي العطاءات غير مرئية لكم، وبمجرد خروج الأرقام من مكاتبكم لا يمكنكم التحكم في مسارها.",
+      "prob2.h": "الانكشاف أمام التدقيق",
+      "prob2.p": "تحليل العطاءات داخلياً يثير أسئلته الخاصة: لا فصل بين الصلاحيات، ولا سجل مستقل يوثّق من اطّلع على ماذا ومتى. وكلا المسارين يترك قرار الترسية عرضة للطعن.",
+      "prob3.h": "الوقت",
+      "prob3.p": "بعد فترة مناقصة تمتد ثلاثة إلى أربعة أشهر، يضيف التحليل والتفاوض وإعادة التقديم أربعة عشر أسبوعاً أخرى قبل توقيع التوصية. وتتراكم كلفة البرنامج الزمني طوال هذه المدة.",
+      "prob4.h": "التكلفة",
+      "prob4.p": "تمرّ الأسعار الشاذة والبنود الناقصة دون اكتشاف في جداول البيانات. وتُترك قيمة على الطاولة في كل تفاوض، دون أن يستطيع أحد تحديد حجمها.",
+      "how.kicker": "آلية العمل",
+      "how.title": "سبع خطوات، سجل واحد.<br>من الدعوة إلى الترسية.",
+      "how.sub": "كل خطوة موثّقة زمنياً، ومضبوطة بالأدوار، ومسجّلة. العملية تُقرأ كما تُدار: بالترتيب.",
+      "s1.t": "إنشاء المناقصة",
+      "s1.d": "تفاصيل المشروع والحزم والميزانية والجدول الزمني، منظّمة من البداية. لا عناء مع القوالب.",
+      "s1.time": "أقل من 10 دقائق",
+      "s2.t": "اختيار المقاولين",
+      "s2.d": "وجّهوا الدعوات من قاعدة بيانات المقاولين المؤهلين مسبقاً لديكم، مصنّفين حسب التخصص والمنطقة والفئة.",
+      "s2.time": "دقائق",
+      "s3.t": "تقديم العطاءات المغلقة",
+      "s3.d": "تُغلق العطاءات فور استلامها على مستوى قاعدة البيانات. لا يمكن لأي مستخدم أو دور الاطلاع على أي عطاء قبل فتح المظاريف.",
+      "s3.time": "فترة تقديم العطاءات",
+      "s4.t": "فتح المظاريف المُحكم",
+      "s4.d": "فتح مقيّد زمنياً يتطلب موافقة معتمدَين اثنين محدّدين بالاسم. ويُنشأ محضر فتح المظاريف تلقائياً.",
+      "s4.time": "عند الموعد النهائي",
+      "s5.t": "التحليل التجاري",
+      "s5.d": "يُحلَّل كل جدول كميات ويُوحَّد ويُقارن عبر جميع العطاءات، مع رصد الأسعار الشاذة للمراجعة.",
+      "s5.time": "أقل من ساعة",
+      "s6.t": "جداول التفاوض",
+      "s6.d": "جداول لكل مقاول تحدّد موقع كل عطاء من بقية العطاءات، بنداً بنداً.",
+      "s6.time": "في اليوم نفسه",
+      "s7.t": "حزمة الترسية",
+      "s7.d": "المحاضر والتحليل والجداول وحزمة التدقيق الكاملة. تُصدَّر بخطوة واحدة، جاهزة لمجلس الإدارة.",
+      "s7.time": "بنقرة واحدة",
+      "speed.kicker": "وقت مستعاد",
+      "speed.title": "أربعة عشر أسبوعاً بعد فتح المظاريف.<br>أو في يوم الفتح نفسه.",
+      "speed.sub": "يبدأ التحليل في الخلفية لحظة فتح العطاءات. يكون تحليل المناقصة الكامل وجداول التفاوض جاهزة قبل مغادرة اللجنة القاعة، وتُعاد مقارنات إعادة التقديم في دقائق لا أسابيع.",
+      "speed.manual": "المسار اليدوي",
+      "speed.manualCap": "14 أسبوعاً: تحليل استشاري، تفاوض، إعادة تقديم",
+      "speed.dayCap": "يوم واحد",
+      "gov.kicker": "الحوكمة",
+      "gov.title": "عملية مناقصة يمكنكم<br>الدفاع عنها، سطراً سطراً.",
+      "gov.sub": "بُنيت Tenderbox بحيث تكون النزاهة خاصية في النظام نفسه، لا وعداً من القائمين عليه.",
+      "g1.l": "العطاءات المغلقة",
+      "g1.h": "مغلقة على مستوى قاعدة البيانات",
+      "g1.p": "تُشفَّر العطاءات وتُقفل لحظة وصولها. ليست مقيّدة بالصلاحيات فحسب: بل غير قابلة للقراءة بنيوياً حتى حدث فتح المظاريف. ولا يوجد أي صلاحية تجاوز لمسؤول النظام.",
+      "g2.l": "فتح المظاريف المُحكم",
+      "g2.h": "فتح المظاريف بموافقة ثنائية",
+      "g2.p": "يتطلب فتح المناقصة موافقة معتمدَين اثنين محدّدين بالاسم بعد الموعد النهائي: المعادل الرقمي لحاملَي مفتاحين أمام الصندوق. ويُسجَّل الحدث ومعتمدوه ووقته الدقيق تلقائياً.",
+      "g3.l": "سجل التدقيق",
+      "g3.h": "سجل بالإضافة فقط، مسلسل التجزئة",
+      "g3.p": "الدعوات والعطاءات والملاحق وفتح المظاريف والتنزيلات: كل إجراء يُكتب في سجل بالإضافة فقط، وكل قيد مرتبط بالقيد السابق. التعديلات إضافات جديدة؛ ولا يُعاد كتابة أي شيء أبداً.",
+      "g4.l": "الفصل بين الصلاحيات",
+      "g4.h": "أدوار لا يمكن أن تتداخل",
+      "g4.p": "من يُنشئ المناقصة، ومن يعتمدون فتح مظاريفها، ومن يحلّلون العطاءات، يحملون أدواراً متمايزة بصلاحيات متمايزة، يفرضها النظام نفسه لا وثائق السياسات.",
+      "g5.l": "الأدلة عند الطلب",
+      "g5.h": "السجل الكامل، قابل للتصدير",
+      "g5.p": "تُصدَّر حزمة التدقيق الكاملة لأي مناقصة كملف واحد: كل حدث وتجزئة ومعتمد وطابع زمني. وإذا طُعن في قرار الترسية، تكون الإجابة جاهزة في دقائق، لا في تحقيق جنائي مطوّل.",
+      "audit.cap": "قيود تدقيق توضيحية · كل قيد مرتبط بالقيد السابق",
+      "an.kicker": "التحليل التجاري",
+      "an.title": "فريق حصر الكميات لديكم، معزّزاً.",
+      "an.sub": "التحليل الذي ينجزه فريق حصر كميات متمكّن خلال أسبوعين، يُعَدّ هنا في أقل من ساعة. كل رقم قابل للتتبع، وكل إشارة قابلة للمراجعة، والحكم النهائي يبقى لفريقكم.",
+      "ap1.h": "تحليل جدول الكميات وتوحيده",
+      "ap1.p": "تُقرأ الجداول متعددة الصفحات كما قُدّمت، بتنسيقها الواقعي، ثم تُوحَّد بنداً ببند عبر جميع العطاءات. لا إعادة إدخال، ولا أخطاء نسخ.",
+      "ap2.h": "رصد الأسعار الشاذة",
+      "ap2.p": "تُرصد الأسعار الخارجة عن نطاق العطاءات مع مدى انحرافها وسياقها، ليتركّز جهد المراجعة حيث توجد الأموال.",
+      "ap3.h": "جداول التفاوض",
+      "ap3.p": "جداول لكل مقاول تبيّن بدقة أي البنود ينبغي التفاوض عليها وبأي مقدار: وثيقة العمل لاجتماع الاستيضاح.",
+      "ap4.h": "مستندات جاهزة للترسية",
+      "ap4.p": "جداول المقارنة وجداول التفاوض والمحاضر بصيغتَي Excel وPDF، منسّقة لتقرير التوصية مباشرة، لا لإعادة العمل.",
+      "rate.cap": "بيانات توضيحية · وسيط العطاءات 83.63 درهم/م²",
+      "yd.kicker": "بياناتكم",
+      "yd.title": "بياناتكم تبقى ملكاً لكم.",
+      "yd.lead": "كل مناقصة تديرونها تبني مكتبة أسعار خاصة بكم: منظّمة، وقابلة للبحث، ولا يطّلع عليها سوى فريقكم. لا تُشارك أبداً ولا تُجمَّع ولا تُباع. ومع الوقت تصبح المرجع الذي تسعّرون به خطة التكاليف التالية.",
+      "yd1.h": "خصوصية بالتصميم",
+      "yd1.p": "أسعاركم ومناقصاتكم وسجلاتكم: متاحة لمؤسستكم ولا لأحد سواها.",
+      "yd2.h": "مبنية من مناقصاتكم أنتم",
+      "yd2.p": "كل مناقصة مكتملة تضيف أسعاراً منظّمة إلى مكتبتكم تلقائياً. لا إدخال بيانات منفصل.",
+      "yd3.h": "مرجعكم السعري، يتراكم",
+      "yd3.p": "أسعار تاريخية حسب التخصص والمنطقة والحزمة: أدق مرجع سيحصل عليه مقدّرو التكاليف لديكم.",
+      "sec.kicker": "الأمن",
+      "sec.title": "مبني على مستوى توقعات المؤسسات.",
+      "sec.sub": "إجابات موجزة عن الأسئلة الأولى لفرق تقنية المعلومات والتدقيق لديكم.",
+      "sr1.t": "الاستضافة",
+      "sr1.d": "بنية سحابية مختارة بمراعاة حوكمة البيانات الإقليمية. وتُعالج متطلبات إقامة البيانات وفق كل تعاقد على حدة.",
+      "sr2.t": "التشفير",
+      "sr2.d": "جميع البيانات مشفّرة أثناء النقل (TLS 1.2+) وفي حالة التخزين (AES-256). وتحمل العطاءات المغلقة طبقة تشفير إضافية لا تُفك إلا عند حدث فتح المظاريف.",
+      "sr3.t": "ضبط الوصول",
+      "sr3.d": "وصول قائم على الأدوار بمبدأ الحد الأدنى من الصلاحيات، وفصل مُنفَّذ بين الصلاحيات، ومصادقة متعددة العوامل لأدوار الاعتماد.",
+      "sr4.t": "التدقيق",
+      "sr4.d": "سجل أحداث بالإضافة فقط ومسلسل التجزئة يغطي كل إجراء في كل مناقصة. قابل للتصدير بالكامل للتدقيق الداخلي أو المراجعة الخارجية.",
+      "sr5.t": "الضمان",
+      "sr5.d": "برنامج أمني مبني على خارطة طريق للمواءمة مع ISO 27001، مع اختبار اختراق مستقل مخطط له في كل دورة إصدار.",
+      "ct.kicker": "تواصلوا معنا",
+      "ct.title": "شاهدوا مناقصة تُدار من البداية إلى النهاية.",
+      "ct.sub": "Tenderbox في مرحلة الوصول المبكر للمطوّرين العقاريين واستشاريي حصر الكميات في دولة الإمارات. اطلبوا عرضاً توضيحياً، أو سجّلوا شركة المقاولات لديكم في قاعدة البيانات المعتمدة.",
+      "ct.n1": "لا التزام مطلوباً لطلبات العرض التوضيحي",
+      "ct.n2": "تُراجع تسجيلات المقاولين خلال خمسة أيام عمل",
+      "ct.n3": "لا تُشارك بياناتكم أبداً دون موافقة صريحة",
+      "ct.n4": "يحصل عملاء الوصول المبكر على شروط الشريك المؤسس",
+      "form.title": "تواصلوا معنا",
+      "form.sub": "اطلبوا عرضاً توضيحياً أو سجّلوا شركة المقاولات لديكم.",
+      "tab.dev": "مطوّر / استشاري حصر كميات",
+      "tab.con": "مقاول",
+      "f.first": "الاسم الأول",
+      "f.firstPh": "أحمد",
+      "f.last": "اسم العائلة",
+      "f.lastPh": "الراشدي",
+      "f.company": "الشركة",
+      "f.companyPh": "اسم الشركة",
+      "f.email": "البريد الإلكتروني للعمل",
+      "f.phone": "الهاتف",
+      "f.interest": "أرغب في",
+      "f.interestCon": "نوع المقاول",
+      "opt.default": "اختاروا واحداً…",
+      "opt.dev1": "عرض توضيحي لمنصة المناقصات",
+      "opt.dev2": "وصول مبكر / برنامج تجريبي",
+      "opt.dev3": "شراكة / استثمار",
+      "opt.con1": "مقاول رئيسي",
+      "opt.con2": "مقاول أعمال كهروميكانيكية",
+      "opt.con3": "مقاول باطن متخصص",
+      "opt.con4": "أعمال مدنية / إنشائية",
+      "opt.con5": "تشطيبات داخلية",
+      "form.submit": "إرسال الطلب",
+      "form.legal": "بإرسال النموذج توافقون على أن يتواصل معكم فريق Tenderbox. لا رسائل مزعجة أبداً.",
+      "ok.h": "تم استلام طلبكم",
+      "ok.p": "سيتواصل معكم فريق Tenderbox خلال يوم عمل واحد. نتطلع إلى الحديث معكم.",
+      "ft.tagline": "مناقصات بناء مغلقة، قابلة للتدقيق، وجاهزة للقرار. صُممت لسوق التطوير العقاري في دولة الإمارات.",
+      "ft.platform": "المنصة",
+      "ft.for": "لمن",
+      "ft.devs": "المطوّرون العقاريون",
+      "ft.qs": "استشاريو حصر الكميات",
+      "ft.contractors": "المقاولون",
+      "ft.govadv": "المستشارون الحكوميون",
+      "ft.company": "الشركة",
+      "ft.privacyPolicy": "سياسة الخصوصية",
+      "ft.termsUse": "شروط الاستخدام",
+      "ft.copy": "© 2026 Tenderbox. جميع الحقوق محفوظة. دبي، الإمارات العربية المتحدة.",
+      "ft.privacy": "الخصوصية",
+      "ft.terms": "الشروط"
+    }
+  };
+
+  // EN strings that live only in JS (dynamic form select), not in markup
+  var EN_EXTRA = {
+    "f.interestCon": "Contractor type",
+    "opt.default": "Select one…",
+    "opt.dev1": "Tendering platform demo",
+    "opt.dev2": "Early access / pilot programme",
+    "opt.dev3": "Partnership / investment",
+    "opt.con1": "Main contractor",
+    "opt.con2": "MEP contractor",
+    "opt.con3": "Specialist subcontractor",
+    "opt.con4": "Civil / structure",
+    "opt.con5": "Interior fit-out"
+  };
+  var OPT_KEYS = {
+    developer: ["opt.dev1", "opt.dev2", "opt.dev3"],
+    contractor: ["opt.con1", "opt.con2", "opt.con3", "opt.con4", "opt.con5"]
+  };
+
+  var currentLang = "en";
+  var currentTab = "developer";
+  var EN_TITLE = document.title;
+  var AR_TITLE = "Tenderbox — مناقصات بناء مغلقة وقابلة للتدقيق";
+
+  // Auto-derive the EN map from the markup so EN → AR → EN is lossless.
+  // Elements whose string legitimately contains markup (<em>, <br>) are
+  // remembered as HTML; everything else is swapped via textContent.
+  var i18nHtmlKeys = {};
+  document.querySelectorAll("[data-i18n]").forEach(function (el) {
+    var k = el.getAttribute("data-i18n");
+    if (translations.en[k] !== undefined) return; // first occurrence wins
+    if (el.children.length > 0) {
+      i18nHtmlKeys[k] = true;
+      translations.en[k] = el.innerHTML;
+    } else {
+      translations.en[k] = el.textContent;
+    }
+  });
+  var enPlaceholders = {};
+  document.querySelectorAll("[data-i18n-placeholder]").forEach(function (el) {
+    var k = el.getAttribute("data-i18n-placeholder");
+    if (enPlaceholders[k] === undefined) enPlaceholders[k] = el.getAttribute("placeholder") || "";
+  });
+
+  function tExtra(key) {
+    if (currentLang === "ar" && translations.ar[key] !== undefined) return translations.ar[key];
+    return EN_EXTRA[key] !== undefined ? EN_EXTRA[key] : (translations.en[key] || key);
+  }
+
+  function renderInterest() {
+    var label = document.getElementById("interest-label");
+    var select = document.getElementById("f-interest");
+    var isDev = currentTab === "developer";
+    label.textContent = isDev
+      ? (currentLang === "ar" ? translations.ar["f.interest"] : translations.en["f.interest"])
+      : tExtra("f.interestCon");
+    var html = '<option value="">' + tExtra("opt.default") + "</option>";
+    OPT_KEYS[isDev ? "developer" : "contractor"].forEach(function (k) {
+      html += "<option>" + tExtra(k) + "</option>";
+    });
+    select.innerHTML = html;
+  }
+
+  function applyLanguage(lang) {
+    currentLang = lang;
+    var isAr = lang === "ar";
+    document.documentElement.setAttribute("lang", isAr ? "ar" : "en");
+    document.documentElement.setAttribute("dir", isAr ? "rtl" : "ltr");
+    document.title = isAr ? AR_TITLE : EN_TITLE;
+    document.querySelectorAll("[data-i18n]").forEach(function (el) {
+      var k = el.getAttribute("data-i18n");
+      if (translations.en[k] === undefined) return;
+      var v = isAr && translations.ar[k] !== undefined ? translations.ar[k] : translations.en[k];
+      if (i18nHtmlKeys[k]) { el.innerHTML = v; } else { el.textContent = v; }
+    });
+    document.querySelectorAll("[data-i18n-placeholder]").forEach(function (el) {
+      var k = el.getAttribute("data-i18n-placeholder");
+      var v = isAr && translations.ar[k] !== undefined ? translations.ar[k] : enPlaceholders[k];
+      if (v !== undefined) el.setAttribute("placeholder", v);
+    });
+    document.getElementById("lang-en").classList.toggle("active", !isAr);
+    document.getElementById("lang-ar").classList.toggle("active", isAr);
+    renderInterest();
+  }
+
+  document.getElementById("lang-toggle").addEventListener("click", function () {
+    applyLanguage(currentLang === "en" ? "ar" : "en");
+  });
 </script>
 
 </body>
