@@ -300,6 +300,32 @@
       white-space: nowrap;
     }
 
+    /* ── PROCESS STAGES ─────────────────────────────────────────────── */
+    .process-grid {
+      display: grid; grid-template-columns: repeat(2, 1fr);
+      border-top: 1px solid var(--ink);
+    }
+    .process-item {
+      display: grid; grid-template-columns: 40px 1fr; gap: 18px;
+      padding: 24px 4px; border-bottom: 1px solid var(--line-soft);
+      align-items: baseline;
+    }
+    .process-item:nth-child(odd) { border-right: 1px solid var(--line-soft); padding-right: 40px; }
+    .process-item:nth-child(even) { padding-left: 40px; }
+    .process-num {
+      font-family: var(--font-head); font-size: 13px; font-weight: 600;
+      color: var(--oxide); font-variant-numeric: tabular-nums;
+    }
+    .process-label {
+      font-size: 11.5px; font-weight: 600; letter-spacing: .16em;
+      text-transform: uppercase; color: var(--ink); display: block; margin-bottom: 6px;
+    }
+    .process-item p { font-size: 13.5px; color: var(--ink-mute); line-height: 1.65; }
+    .process-close {
+      margin-top: 40px; padding-top: 24px; border-top: 1px solid var(--line);
+      font-size: 14.5px; color: var(--ink-soft); line-height: 1.7; max-width: 640px;
+    }
+
     /* ── SPEED COMPARISON (animated race) ───────────────────────────── */
     .speed-lanes {
       max-width: 860px; border-top: 1px solid var(--line);
@@ -595,6 +621,10 @@
       .ledger-row { grid-template-columns: 56px 1fr; gap: 8px 18px; }
       .ledger-desc { grid-column: 2; }
       .ledger-time { grid-column: 2; text-align: left; margin-top: 4px; }
+      .process-grid { grid-template-columns: 1fr; }
+      .process-item,
+      .process-item:nth-child(odd),
+      .process-item:nth-child(even) { border-right: none; padding-left: 4px; padding-right: 4px; }
       .yd-points { grid-template-columns: 1fr; }
       .yd-point { border-right: none; border-bottom: 1px solid var(--line-soft); padding: 22px 0; }
       .yd-point:last-child { border-bottom: none; }
@@ -635,6 +665,8 @@
     [dir="rtl"] .gov-item:nth-child(odd) { border-right: none; border-left: 1px solid rgba(250,248,244,.12); padding-left: 44px; padding-right: 0; }
     [dir="rtl"] .gov-item:nth-child(even) { padding-left: 36px; padding-right: 44px; }
     [dir="rtl"] .gov-wide { border-left: none !important; padding: 40px 0 8px !important; }
+    [dir="rtl"] .process-item:nth-child(odd) { border-right: none; border-left: 1px solid var(--line-soft); padding-right: 4px; padding-left: 40px; }
+    [dir="rtl"] .process-item:nth-child(even) { padding-left: 4px; padding-right: 40px; }
     /* Product-UI mock-ups stay English, so they stay LTR */
     [dir="rtl"] .tender-card, [dir="rtl"] .rate-panel, [dir="rtl"] .audit-strip { direction: ltr; }
     [dir="rtl"] .yd-point { border-right: none; border-left: 1px solid var(--line-soft); }
@@ -648,6 +680,9 @@
       [dir="rtl"] .gov-item:nth-child(even) { border-left: none; padding-left: 0; padding-right: 0; }
       [dir="rtl"] .yd-point { border-left: none; padding: 22px 0; }
       [dir="rtl"] .ledger-time { text-align: right; }
+      [dir="rtl"] .process-item,
+      [dir="rtl"] .process-item:nth-child(odd),
+      [dir="rtl"] .process-item:nth-child(even) { border-left: none; padding-left: 4px; padding-right: 4px; }
     }
   </style>
 </head>
@@ -674,6 +709,7 @@
       <nav aria-label="Primary">
         <ul class="nav-links">
           <li><a href="#how-it-works" data-i18n="nav.how">How it Works</a></li>
+          <li><a href="#process" data-i18n="nav.process">Process</a></li>
           <li><a href="#governance" data-i18n="nav.gov">Governance</a></li>
           <li><a href="#analysis" data-i18n="nav.analysis">Analysis</a></li>
           <li><a href="#security" data-i18n="nav.security">Security</a></li>
@@ -691,6 +727,7 @@
   </div>
   <div class="mobile-menu" id="mobile-menu">
     <a href="#how-it-works" data-i18n="nav.how">How it Works</a>
+    <a href="#process" data-i18n="nav.process">Process</a>
     <a href="#governance" data-i18n="nav.gov">Governance</a>
     <a href="#analysis" data-i18n="nav.analysis">Analysis</a>
     <a href="#security" data-i18n="nav.security">Security</a>
@@ -953,6 +990,90 @@
         </div>
       </div>
     </div>
+  </div>
+</section>
+
+<!-- ── PROCESS ─────────────────────────────────────────────────────── -->
+<section class="sec sec-warm" id="process">
+  <div class="container">
+    <div class="sec-head reveal">
+      <span class="kicker" data-i18n="process.kicker">Built on real procurement governance</span>
+      <h2 class="section-title" style="margin-top:22px;" data-i18n="process.title">Your process. Not a startup's<br>reinvention of it.</h2>
+      <p class="section-sub" data-i18n="process.sub">Tenderbox follows the procurement lifecycle your auditors already recognise, with an e-approval gate at every step a signature used to sit.</p>
+    </div>
+    <div class="process-grid reveal">
+      <div class="process-item">
+        <span class="process-num num">01</span>
+        <div>
+          <span class="process-label" data-i18n="process.s1.t">Tender strategy</span>
+          <p data-i18n="process.s1.d">Route, criteria and bidder list approved and frozen before issue.</p>
+        </div>
+      </div>
+      <div class="process-item">
+        <span class="process-num num">02</span>
+        <div>
+          <span class="process-label" data-i18n="process.s2.t">Pre-qualification</span>
+          <p data-i18n="process.s2.d">Structured PQQ, licences and insurances tracked to expiry.</p>
+        </div>
+      </div>
+      <div class="process-item">
+        <span class="process-num num">03</span>
+        <div>
+          <span class="process-label" data-i18n="process.s3.t">Invitation</span>
+          <p data-i18n="process.s3.d">Lean ITT pack generated and issued to the approved list.</p>
+        </div>
+      </div>
+      <div class="process-item">
+        <span class="process-num num">04</span>
+        <div>
+          <span class="process-label" data-i18n="process.s4.t">Queries &amp; addenda</span>
+          <p data-i18n="process.s4.d">Answers issued to all tenderers; acknowledgement logged automatically.</p>
+        </div>
+      </div>
+      <div class="process-item">
+        <span class="process-num num">05</span>
+        <div>
+          <span class="process-label" data-i18n="process.s5.t">Sealed submission</span>
+          <p data-i18n="process.s5.d">Bids locked at database level with an instant automated receipt.</p>
+        </div>
+      </div>
+      <div class="process-item">
+        <span class="process-num num">06</span>
+        <div>
+          <span class="process-label" data-i18n="process.s6.t">Opening committee</span>
+          <p data-i18n="process.s6.d">Quorum of named approvers; no individual can unseal alone.</p>
+        </div>
+      </div>
+      <div class="process-item">
+        <span class="process-num num">07</span>
+        <div>
+          <span class="process-label" data-i18n="process.s7.t">Technical evaluation</span>
+          <p data-i18n="process.s7.d">Weighted scoring approved before commercial envelopes unseal.</p>
+        </div>
+      </div>
+      <div class="process-item">
+        <span class="process-num num">08</span>
+        <div>
+          <span class="process-label" data-i18n="process.s8.t">Commercial analysis</span>
+          <p data-i18n="process.s8.d">Every bill compared like-for-like, outliers flagged, same day.</p>
+        </div>
+      </div>
+      <div class="process-item">
+        <span class="process-num num">09</span>
+        <div>
+          <span class="process-label" data-i18n="process.s9.t">Negotiation</span>
+          <p data-i18n="process.s9.d">Identical packs, identical deadlines, sealed responses.</p>
+        </div>
+      </div>
+      <div class="process-item">
+        <span class="process-num num">10</span>
+        <div>
+          <span class="process-label" data-i18n="process.s10.t">Award</span>
+          <p data-i18n="process.s10.d">Recommendation with full chronology, e-approved, evidence bundle attached.</p>
+        </div>
+      </div>
+    </div>
+    <p class="process-close reveal rd-1" data-i18n="process.close">Fast-track single-envelope or conventional two-envelope. Works packages or consultancy services. The governance holds either way.</p>
   </div>
 </section>
 
@@ -1274,6 +1395,7 @@
       "topbar.built": "صُمم لدولة الإمارات",
       "topbar.hosted": "استضافة البيانات وفق مبادئ الحوكمة",
       "nav.how": "آلية العمل",
+      "nav.process": "المنهجية",
       "nav.gov": "الحوكمة",
       "nav.analysis": "التحليل",
       "nav.security": "الأمن",
@@ -1335,6 +1457,30 @@
       "speed.seg3": "إعادة التقديم · 4",
       "speed.done": "أُنجز في يوم فتح المظاريف.",
       "speed.returned": "13 أسبوعاً و6 أيام تُعاد إلى البرنامج الزمني",
+      "process.kicker": "مبنية على حوكمة مشتريات راسخة",
+      "process.title": "منهجيتكم أنتم.<br>لا إعادة اختراع من شركة ناشئة.",
+      "process.sub": "تتبع Tenderbox دورة المشتريات التي يعرفها مدققوكم بالفعل، مع بوابة اعتماد إلكتروني عند كل خطوة كان يقف عندها توقيع في السابق.",
+      "process.s1.t": "استراتيجية المناقصة",
+      "process.s1.d": "يُعتمد مسار الطرح والمعايير وقائمة مقدّمي العطاءات وتُجمَّد قبل الطرح.",
+      "process.s2.t": "التأهيل المسبق",
+      "process.s2.d": "استبيان تأهيل مسبق منظّم، مع تتبع الرخص ووثائق التأمين حتى تاريخ انتهائها.",
+      "process.s3.t": "الدعوة",
+      "process.s3.d": "تُنشأ حزمة دعوة موجزة لتقديم العطاءات وتُصدَر إلى القائمة المعتمدة.",
+      "process.s4.t": "الاستفسارات والملاحق",
+      "process.s4.d": "تُصدَر الإجابات إلى جميع مقدّمي العطاءات، ويُسجَّل الإقرار بالاستلام تلقائياً.",
+      "process.s5.t": "تقديم العطاءات المغلقة",
+      "process.s5.d": "تُقفل العطاءات على مستوى قاعدة البيانات مع إشعار استلام آلي فوري.",
+      "process.s6.t": "لجنة فتح المظاريف",
+      "process.s6.d": "نصاب من معتمدين محدّدين بالاسم؛ لا يمكن لأي فرد فتح المظاريف بمفرده.",
+      "process.s7.t": "التقييم الفني",
+      "process.s7.d": "تُعتمد أوزان التقييم قبل فتح المظاريف التجارية.",
+      "process.s8.t": "التحليل التجاري",
+      "process.s8.d": "يُقارن كل جدول كميات بنداً ببند، وتُرصد الأسعار الشاذة، في اليوم نفسه.",
+      "process.s9.t": "التفاوض",
+      "process.s9.d": "حزم متطابقة، ومواعيد نهائية متطابقة، وردود مغلقة.",
+      "process.s10.t": "الترسية",
+      "process.s10.d": "توصية مع التسلسل الزمني الكامل، معتمدة إلكترونياً، مرفقة بحزمة الأدلة.",
+      "process.close": "مسار سريع بمظروف واحد أو مسار تقليدي بمظروفين. حزم أعمال أو خدمات استشارية. والحوكمة قائمة في الحالتين.",
       "gov.kicker": "الحوكمة",
       "gov.title": "عملية مناقصة يمكنكم<br>الدفاع عنها، سطراً سطراً.",
       "gov.sub": "بُنيت Tenderbox بحيث تكون النزاهة خاصية في النظام نفسه، لا وعداً من القائمين عليه.",
